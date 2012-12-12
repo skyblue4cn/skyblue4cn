@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--security filter-->
+<beans>
+   <!-- 小写比较与ant兼容 -->
+	<bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT 
+				/**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+			</value>
+		</property>
+	</bean>
+  <!-- 用户验证 -->
+	<bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+			<!-- 数据库信息验证 -->
+				<ref local="daoAuthenticationProvider" />
+			<!-- 匿名用户身份验证 -->
+				<ref local="anonymousAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="jdbcDaoImpl"/>
+        <property name="userCache" ref="userCache"/>
+    <!-- md5加密 
+        <property name="passwordEncoder" ref="passwordEncoder"/>	
+        -->
+	</bean>
+	<!-- md5加密 
+	<bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+ -->
+	<bean id="jdbcDaoImpl" class="org.acegisecurity.userdetails.jdbc.JdbcDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="usersByUsernameQuery">
+		<!-- 	
+		<value>select name,passwd,isValid from tb_user where isValid=1 and name=?</value>
+		-->
+		<!-- 验证 -->
+		<value>select registname,pwd,isValid from tb_user where isValid=1 and registname=?</value>
+		</property>
+		<property name="authoritiesByUsernameQuery">
+		<!--
+		<value>select b.id,a.role_desc from role a, tb_user b, UserRoleXREF c where c.UserID = b.id and a.id = c.roleID and b.name=?</value>
+		-->
+		<!--用户授权信息 -->
+		<value>
+		select b.id,a.role_desc from role a, tb_user b, UserRole c where c.User_ID = b.id and a.id = c.roleID and b.registname=?
+		</value>
+		</property>
+	</bean>
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+	<bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="userCache" />
+	</bean>
+	
+	<!-- 用户信息缓存 -->
+	<bean id="userCache" class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		<property name="cache" ref="userCacheBackend" />
+	</bean>
+
+	<bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener" />
+   <!-- 不需要验证 -->
+	<bean id="anonymousProcessingFilter" class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+		<property name="key">
+			<value>foobar</value>
+		</property>
+		<property name="userAttribute">
+			<value>anonymousUser,ROLE_ANONYMOUS</value>
+		</property>
+	</bean>
+
+	<bean id="anonymousAuthenticationProvider" class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+		<property name="key">
+			<value>foobar</value>
+		</property>
+	</bean>
+	
+		<!--退出  -->
+	<bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
+        <!-- 退出后指向的 URL -->
+        <constructor-arg value="/index.htm"/>
+        <constructor-arg>
+            <list>
+                <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler"/>
+                <bean class="cn.cdyc.tongji.utils.SessionLogoutHandler"/>
+            </list>
+        </constructor-arg>
+        <property name="filterProcessesUrl">
+			<value>/logout</value>
+		</property>
+    </bean>
+ <!-- 异常去向 -->
+	<bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<ref local="authenticationProcessingFilterEntryPoint" />
+		</property>
+	</bean>
+  
+	<bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="authenticationFailureUrl">
+			<value>/refuse.jsp</value>
+		</property>
+		<property name="defaultTargetUrl">
+			<value>/login.action</value>
+		</property>
+		<property name="filterProcessesUrl">
+			<value>/j_acegi_security_check</value>
+		</property>
+		<property name="alwaysUseDefaultTargetUrl" value="true"/>
+	</bean>
+ <!-- 定义登陆失败转向页面 -->
+	<bean id="authenticationProcessingFilterEntryPoint" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+		<property name="loginFormUrl">
+			<value>/index.htm</value>
+		</property>
+		<property name="forceHttps">
+			<value>false</value>
+		</property>
+	</bean>
+ <!-- 每次request前 HttpSessionContextIntegrationFilter从Session中获取Authentication对象 -->
+	<bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"></bean>
+
+	<bean id="httpRequestAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter">		
+	</bean>
+
+	<bean id="filterInvocationInterceptor" class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager">
+			<ref local="httpRequestAccessDecisionManager" />
+		</property>
+		<property name="objectDefinitionSource">
+			<value>
+			CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON PATTERN_TYPE_APACHE_ANT 
+			/index.jsp=ROLE_ANONYMOUS,ROLE_USER
+			/logout.jsp=ROLE_ANONYMOUS,ROLE_USER
+			/logFalse.jsp=ROLE_ANONYMOUS,ROLE_USER
+			/login.jsp=ROLE_ANONYMOUS,ROLE_USER
+			/listRoleAction.action=ROLE_ADMIN
+			/listAclAction.action=ROLE_ADMIN
+			/updateAclAction.action=ROLE_ADMIN
+			/**=ROLE_USER,ROLE_ADMIN
+			</value>
+		</property>
+	</bean>
+</beans>

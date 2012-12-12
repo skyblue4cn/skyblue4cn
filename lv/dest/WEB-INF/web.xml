@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd"-->
+<web-app>
+
+	<display-name>The 统计 System</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/applicationContext.xml,
+		WEB-INF/spring-*.xml
+		</param-value>
+	</context-param>
+	
+
+	<servlet>
+		<servlet-name>log4jConfigServlet</servlet-name>
+		<servlet-class>org.springframework.web.util.Log4jConfigServlet</servlet-class>
+		<init-param>
+			<param-name>log4jConfigLocation</param-name>
+			<param-value>/WEB-INF/classes/log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	
+	<!-- ??Spring -->
+	<servlet>
+		<servlet-name>context</servlet-name>
+		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+
+	<!-- ??WebWork -->
+	<servlet>
+		<servlet-name>webwork</servlet-name>
+		<servlet-class>com.opensymphony.webwork.dispatcher.ServletDispatcher</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+
+	
+	<!-- ??action??? -->
+	<servlet-mapping>
+		<servlet-name>webwork</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+
+	<!-- get spring applicationContext -->
+<!-- 	<servlet>
+		<description>no description</description>
+		<display-name>ApplicationContextServlet</display-name>
+		<servlet-name>ApplicationContextServlet</servlet-name>
+		<servlet-class>cn.cdyc.tongji.servlet.RegisterSpringAppContext</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+	-->
+	<taglib>
+		<taglib-uri>webwork</taglib-uri>
+		<taglib-location>/WEB-INF/webwork.tld</taglib-location>
+	</taglib>
+	
+	
+	<!-- acegi -->
+	
+	<!-- 将过滤器委托给filterChainProxy -->
+	<!-- 
+	<filter>
+		<filter-name>AcegiFilterChainProxy</filter-name>
+		<filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+		<init-param>
+			<param-name>targetClass</param-name>
+			<param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+		</init-param>
+	</filter>
+	 -->
+	<!-- 对所有的url请求应用这个过滤器 -->
+	<!-- 
+	<filter-mapping>
+		<filter-name>AcegiFilterChainProxy</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+		<listener>
+		<listener-class>org.acegisecurity.ui.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	 -->
+	
+	<!-- acegi完 -->
+	
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+
+	
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	
+	</welcome-file-list>
+
+	<mime-mapping>
+		<extension>rar</extension>
+		<mime-type>application/rar</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>xsl</extension>
+		<mime-type>application/xsl</mime-type>
+	</mime-mapping>
+	
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/internalError.jsp</location>
+	</error-page>
+
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/page_not_found.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>
+			java.lang.Exception
+		</exception-type>
+		<location>/exception.jsp</location>
+	</error-page>
+</web-app>

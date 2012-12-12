@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<project name="insurance" default="compile" basedir=".">
+	<target name="init">
+		<property name="prjname" value="insurance"/>
+		<property file="${basedir}/build.properties" />
+		<property name="full_version" value="${version}_${build}" />
+		<property name="source" value="${basedir}/source" />
+		<property name="classes" value="${basedir}/classes" />
+		<property name="dest_dir" value="${basedir}/dest" />
+		<property name="deploy_dir" value="${Tomcat}/webapps" />
+		<property name="web" value="${basedir}/web" />
+		<property name="prjwar" value="${prjname}_${full_version}.war" />
+		
+		<fileset id="sud" dir="${basedir}/web/WEB-INF/lib/sud">
+			<include name="*.jar" />
+		</fileset>
+		
+		<fileset id="third-party" dir="${basedir}/web/WEB-INF/lib">
+			<include name="*.jar" />
+		</fileset>		
+	</target>
+
+	<path id="insurance.class.path">
+		<fileset refid="sud" />
+		<fileset refid="third-party" />		
+	</path>
+
+	<target name="compile" depends="init">
+		<javac encoding="utf-8" srcdir="${source}" debug="true" destdir="${classes}" classpathref="insurance.class.path" />
+		<copy todir="${classes}">
+			<fileset dir="${source}/" excludes="**/*.java">
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Now build the springtest war -->
+	<target name="war" depends="compile">
+		<delete dir="${basedir}" includes="${prjwar}" />
+		<!-- Build the WAF  jar -->
+		<mkdir dir="${dest_dir}" />
+		<mkdir dir="${dest_dir}/WEB-INF" />
+		<mkdir dir="${dest_dir}/WEB-INF/classes" />
+		<mkdir dir="${dest_dir}/WEB-INF/lib" />
+		
+		
+		<copy todir="${dest_dir}">
+			<fileset dir="${basedir}/web" />
+		</copy>
+		
+		<copy todir="${dest_dir}/WEB-INF/">
+			<fileset dir="${web}/WEB-INF/" includes="*.*" excludes="insurance.xml">
+			</fileset>
+		</copy>
+		
+		<copy todir="${dest_dir}/WEB-INF/classes">
+			<fileset dir="${classes}" />
+		</copy>
+		<copy todir="${dest_dir}/WEB-INF/lib">
+			<fileset refid="sud" />
+			<fileset refid="third-party" />			
+		</copy>
+		<jar jarfile="${prjwar}" basedir="${dest_dir}" />
+	</target>
+
+	<target name="model" depends="compile">
+		<jar jarfile="model.jar" basedir="${classes}" includes="cn/insurance/webservice/*"/>
+		<copy file="model.jar"  todir="${client}/lib" overwrite="true"/>
+	</target>
+	
+	<target name="jar" depends="compile">
+			<jar jarfile="insurance.jar" basedir="${classes}"/>			
+		</target>
+
+	<target name="deploy" depends="war">
+		<delete dir="${deploy_dir}" includes="${prjwar}" />
+		<delete dir="${deploy_dir}/${prjname}" />
+		<copy file="${basedir}/${prjwar}" tofile="${deploy_dir}/${prjname}.war" />
+		
+	</target>
+
+	<target name="all" depends="clean, compile, deploy" />
+
+	<target name="clean" depends="init">
+		<delete dir="${classes}/cn" />
+		<delete dir="${deploy_dir}/${prjname}" />
+		<delete includeemptydirs="true" dir="${dest_dir}" includes="**/*" excludes="CVS/*"/>
+		<delete dir="${basedir}" includes="*.war" />
+	</target>
+
+	<target name="copy_jsp" depends="init">
+		<copy todir="${deploy_dir}/${prjname}" overwrite="false">
+			<fileset dir="${basedir}/web" />
+		</copy>
+		</target>
+	
+	<target name="copy_class" depends="init,compile" >
+		<copy todir="${deploy_dir}/${prjname}/WEB-INF/classes" overwrite="false">
+		  <fileset dir="${classes}" />
+	   </copy>
+	</target>
+	<target name="copy_all" depends="init,copy_class,copy_jsp">
+	</target>
+</project>

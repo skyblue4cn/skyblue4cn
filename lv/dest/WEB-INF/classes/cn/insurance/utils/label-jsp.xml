@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels>
+
+<!-- 客户端 client 配置 -->
+	
+	<label>
+		<id>client_index</id>
+		<jsppath>/client/message/show_message_for_partment.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+
+	<label>
+		<id>client_apply</id>
+		<jsppath>/client/applybill/to_apply_new_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_apply</id>
+		<jsppath>/client/applybill/query/show_refered_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_apply</id>
+		<jsppath>/client/applybill/query/show_beian_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_apply</id>
+		<jsppath>/client/applybill/query/show_effected_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_apply</id>
+		<jsppath>/client/applybill/query/show_return_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_partment</id>
+		<jsppath>/client/partment/showPartmentBill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+		<label>
+		<id>client_partment</id>
+		<jsppath>/client/partment/showPartmentMonthFee.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_jiesuan</id>
+		<jsppath>/client/account/show_account_info.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_jiesuan</id>
+		<jsppath>/client/account/month/show_partment_month_log.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_jiesuan</id>
+		<jsppath>/client/account/yucun/show_partment_yucun_cun.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_jiesuan</id>
+		<jsppath>/client/account/yucun/show_partment_yucun_pay.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_applyupdate</id>
+		<jsppath>/client/applyupdate/manager_apply_update.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_applyupdate</id>
+		<jsppath>/client/applyupdate/show_not_reply_apply.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_applyupdate</id>
+		<jsppath>/client/applyupdate/show_has_reply_apply.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	
+	<label>
+		<id>client_p_query</id>
+		<jsppath>/client/search/bill_query_by_partment.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_p_phone</id>
+		<jsppath>/client/baoan.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_p_help</id>
+		<jsppath>/client/help.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_tongji</id>
+		<jsppath>/client/tongji2/tongji.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_tongji</id>
+		<jsppath>/client/tongji2/month/tongjiByMonth.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>client_tongji</id>
+		<jsppath>/client/tongji2/date/tongjiByDate.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<!-- 后台配置 -->
+	
+	<label>
+		<id>service_index</id>
+		<jsppath>/manager/message/show_all_db_message.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_index</id>
+		<jsppath>/manager/message/show_all_dy_message.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	<label>
+		<id>service_hedan</id>
+		<jsppath>/yewu/sure/manager_bill_by_bx.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_hedan</id>
+		<jsppath>/manager/sure/fenlei/show_bill_need_bx_sure.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_hedan</id>
+		<jsppath>/manager/sure/fenlei/show_beian_bill.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_hedan</id>
+		<jsppath>/manager/sure/fenlei/show_bill_has_sure_for_bx.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_hedan</id>
+		<jsppath>/manager/sure/fenlei/show_bill_return_by_bx.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_apply_update</id>
+		<jsppath>/manager/apply/show/show_all_not_reply.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_apply_update</id>
+		<jsppath>/manager/apply/show/show_all_has_reply.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+		
+	<label>
+		<id>service_bill_check</id>
+		<jsppath>/manager/check/index.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_account_manager</id>
+		<jsppath>/manager/account/manager/account_manager.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	<label>
+		<id>service_account_manager</id>
+		<jsppath>/account_admin/manager/show_all_partment.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_yuefei_stat</id>
+		<jsppath>/manager/account/manager/month/jiesuan/manager_jiesuan.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_peikuan_manager</id>
+		<jsppath>/manager/peikuan/show_all_peikuan_log.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_peikuan_manager</id>
+		<jsppath>/manager/peikuan/show_all_peikuan_log.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	<label>
+		<id>service_search</id>
+		<jsppath>/manager/search/query_bill_by_bx.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_stat</id>
+		<jsppath>/account_admin/peikuan/manager_peikuan_log.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	
+	
+	<label>
+		<id>service_company_manager</id>
+		<jsppath>/manager/admin/companyAdminMain.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_info</id>
+		<jsppath>/manager/admin/partmentInfo/showPartmentInfo.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_user</id>
+		<jsppath>/manager/admin/user/lxs/show_all_partment_user.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_account</id>
+		<jsppath>/manager/admin/account/showAccountInfo.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_account_cun_log</id>
+		<jsppath>/manager/admin/account_pay_out_log/showAccountCunLog.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_account_pay_log</id>
+		<jsppath>/manager/admin/account_pay_out_log/showAccountPayLog.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	
+	<label>
+		<id>service_company_manager_month_fee</id>
+		<jsppath>/manager/admin/monthFee/showMonthFeeList.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_company_manager_partment_manager</id>
+		<jsppath>/manager/admin/partment/showAllPartment.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	
+	<label>
+		<id>service_price_manager</id>
+		<jsppath>/manager/admin/price/manager_price.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_neibu_manager</id>
+		<jsppath>/manager/admin/user/bx/show_all_bx_user.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+	<label>
+		<id>service_right_manager</id>
+		<jsppath>/manager/right/role/roleList.jsp</jsppath>
+		<match-style>on</match-style>
+		<not-match-style>noon</not-match-style>
+	</label>
+	
+</labels>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- START SNIPPET: xfire -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/notify.xfire">
+                    <ref bean="notify"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="xfire.serviceFactory" class="org.codehaus.xfire.service.binding.ObjectServiceFactory"/>
+    
+    <bean id="xfire" class="org.codehaus.xfire.DefaultXFire"/>
+    
+    <!-- Declare a parent bean with all properties common to both services -->
+    <bean id="notify" class="org.codehaus.xfire.spring.remoting.XFireExporter">
+        <property name="serviceFactory">
+            <ref bean="xfire.serviceFactory"/>
+        </property>
+        <property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="serviceBean">
+            <ref bean="notifyService"/>
+        </property>
+        <property name="serviceClass">
+            <value>cdyc.tongji.webservice.INotifyService</value>
+        </property>
+    </bean>
+    <!-- END SNIPPET: xfire -->
+</beans>

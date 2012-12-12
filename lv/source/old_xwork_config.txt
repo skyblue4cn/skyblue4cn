@@ -1,0 +1,70 @@
+		
+		
+		<!-- 删除旅行社用户 -->
+		<action name="removeLxsUser" class="adminUserAction" method="removeUser">
+			<result name="success" type="redirect">getAllUserByPartmentId.action?intPartmentId=${tbUser.intPartmentId}</result>
+		</action>
+		
+		
+		<action name="getPartmentInfo" class="adminPartmentAction" method="queryPartmentInfoById">
+			<result name="success">/manager/admin/partment/showPartmentInfo.jsp</result>
+		</action>	
+		
+		<!-- 查询出所有的旅行社 -->
+		<action name="getAllCompany" class="adminPartmentAction" method="queryAllCompany">
+			<result name="success">/manager/admin/company/show_all_company.jsp</result>
+		</action>
+		
+					
+		<!-- *************************************  帐户管理  ****************************************************** -->
+
+		<!-- 进入帐户管理 -->
+		<action name="toManagerAccount" class="adminPartmentAction" method="queryAllCompany">
+			<result name="success">/manager/account/manager/account_manager.jsp</result>
+		</action>
+		
+		<!-- 按旅行社ID查询所有该旅行社的部门 -->
+		<action name="getPartmentsToAccountManager" class="adminPartmentAction" method="getAllPartmentByCompanyId">
+			<result name="success">/manager/account/manager/show_all_partment.jsp</result>
+		</action>
+		
+	
+				
+			<!-- 预存记录 -->
+			
+				<!-- 进入统计 -->
+		<action name="toPartmentMonthStat" class="adminTongJiAction" method="toTongJIPartmentStat">
+			<result name="company">/pub/tongji/company_stat.jsp</result>
+			<result name="partment">/pub/tongji/partment_stat.jsp</result>
+			<result name="baoxian">/pub/tongji/bx_stat.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>			
+		
+		<!-- 客户端用户默认的统计报表 -->
+		<action name="getDefaultPartmentYearStat" class="adminTongJiAction" method="getDefaultPartmentYearStat">
+			<result name="success">/pub/tongji/default_year_stat.jsp</result>
+		</action>
+		
+		<!-- 按年进行统计 -->
+		<action name="getPartmentYearStatByYear" class="adminTongJiAction" method="getPartmentYearStatByYear">
+			<result name="success">/pub/tongji/year/show_partment_year_tongji.jsp</result>
+		</action>
+		
+		<!-- 按月进行统计 -->
+		<action name="getPartmentMonthStatByMonth" class="adminTongJiAction" method="queryPartmentMonthStatByMonth">
+			<result name="success">/pub/tongji/month/show_partment_month_tongji.jsp</result>
+		</action>	
+		
+		<action name="getAllStatBillToShow" class="adminTongJiAction" method="getAllStatBillToShow">
+			
+		</action>		
+		
+		<!-- 按月查询该月每天的统计 -->
+		<action name="getPartmentMonthStatForDays" class="adminTongJiAction" method="getPartmentMonthStatForDays">
+			<result name="success">/pub/tongji/days/show_partment_days_tongji.jsp</result>
+		</action>	
+		
+		<!-- 按时间段进行统计 -->
+		<action name="getPartmentTimeStatByTime" class="adminTongJiAction" method="getPartmentTimeStatByTime">
+			<result name="success">/pub/tongji/time/show_partment_times_tongji.jsp</result>
+		</action>

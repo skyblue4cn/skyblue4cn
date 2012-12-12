@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<bean id="yueJieServlet" class="cn.insurance.servlet.YueJieServlet" singleton="false">
+	
+	</bean>
+	
+	<bean id="supportAction" class="cn.insurance.action.SupportAction" singleton="false"></bean>
+	
+	<bean id="loginAction" class="cn.insurance.action.pub.LoginAction" singleton="false" parent="supportAction">
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="tbResourceServ" ref="tbResourceServ"></property>
+	</bean>
+	
+	<bean id="pubUserAction" class="cn.insurance.action.pub.UserAdminAction" singleton="false" parent="supportAction">
+		<property name="tbUserServ" ref="tbUserServ"></property>
+	</bean>
+	
+	<bean id="downloadAdminAction" class="cn.insurance.action.pub.DownloadAdminAction" singleton="false"></bean>
+	
+	<!-- client -->
+	
+	<bean id="clientMessageAction" class="cn.insurance.action.client.message.MessageAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="pageBeanReturn" ref="pageBean"></property>
+		
+		<property name="clientMessageServ" ref="clientMessageServ"></property>
+		 <property name="clientBillServ" ref="clientBillServ"></property>
+	</bean>
+	
+	<bean id="clientBillAction" class="cn.insurance.action.client.bill.BillAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="clientBillServ" ref="clientBillServ"></property>
+		<property name="clientMonthFeeServ" ref="clientMonthFeeServ"></property>
+		<!-- <property name="clientBillServ" ref="clientBillServ"></property> -->
+	</bean>
+	
+	<bean id="clientAccountAction" class="cn.insurance.action.client.account.AccountAction" singleton="false" parent="supportAction">
+		<property name="clientAccountServ" ref="clientAccountServ"></property>
+	</bean>
+	
+	<bean id="clientMonthFeeAction" class="cn.insurance.action.client.account.MonthFeeAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="clientMonthFeeServ" ref="clientMonthFeeServ"></property>
+	</bean>
+	
+	<bean id="clientYuCunAction" class="cn.insurance.action.client.account.YuCunAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="clientYuCunServ" ref="clientYuCunServ"></property>
+	</bean>
+	
+	<bean id="clientBillSearchAction" class="cn.insurance.action.client.bill.BillSearchAction" singleton="false" parent="supportAction">
+		<property name="clientBillServ" ref="clientBillServ"></property>
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	<bean id="clientTravelerAction" class="cn.insurance.action.client.bill.TravelerAction" singleton="false" parent="supportAction">
+	
+	</bean>
+	
+	<bean id="clientApplyAction" class="cn.insurance.action.client.apply.ApplyAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="clientApplyServ" ref="clientApplyServ"></property>
+		<property name="clientBillServ" ref="clientBillServ"></property>
+	</bean>
+	
+	<bean id="clientTongAction" class="cn.insurance.action.client.tongji.ClientTongjiAction" singleton="false" parent="supportAction">
+		<property name="tongJiServ" ref="tongJiPubServ"></property>
+	</bean>
+	
+	
+	<bean id="clientPartmentBillAction" class="cn.insurance.action.client.partment.PartmentBillAction" singleton="false" parent="supportAction">
+		<property name="clientPartmentServ" ref="clientPartmentServ"></property>
+		<property name="clientBillServ" ref="clientBillServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+		<bean id="clientPartmentMonthFeeAction" class="cn.insurance.action.client.partment.PartmentMonthFeeAction" singleton="false" parent="supportAction">
+		<property name="clientPartmentServ" ref="clientPartmentServ"></property>
+		<property name="clientMonthFeeServ" ref="clientMonthFeeServ"></property>
+	</bean>
+	
+	<!-- admin -->
+	
+	<bean id="adminMessageAction" class="cn.insurance.action.admin.message.MessageAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="adminMessageServ" ref="adminMessageServ"></property>
+	</bean>
+	
+	<bean id="adminBillAction" class="cn.insurance.action.admin.bill.BillAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="adminBillServ" ref="adminBillServ"></property>
+	</bean>
+	
+	<bean id="adminBillSearchAction" class="cn.insurance.action.admin.bill.BillSearchAction" singleton="false" parent="supportAction">
+		<property name="adminBillServ" ref="adminBillServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+		<property name="tbUserServ" ref="tbUserServ"></property>
+	</bean>
+	
+	<bean id="adminMd5Checkbill" class="cn.insurance.action.admin.bill.Md5CheckBill" singleton="false" parent="supportAction">
+		<property name="adminBillServ" ref="adminBillServ"></property>
+	</bean>
+	
+	<bean id="adminApplyAction" class="cn.insurance.action.admin.apply.ApplyAdminAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="adminApplyServ" ref="adminApplyServ"></property>
+	</bean>
+	
+
+	
+	<bean id="adminPartmentAction" class="cn.insurance.action.admin.partment.PartmentAction" singleton="false" parent="supportAction">
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+		<property name="pageBean" ref="pageBean"/>
+	</bean>
+	<bean id="adminAccountAction" class="cn.insurance.action.admin.account.AccountAction" singleton="false" parent="supportAction">
+		<property name="adminAccountServ" ref="adminAccountServ"></property>
+	</bean>
+	
+	<bean id="adminUserAction" class="cn.insurance.action.admin.user.UserAtion" singleton="false" parent="supportAction">
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="adminRoleServ" ref="adminRoleServ"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+	</bean>
+	
+	<bean id="adminRoleAction" class="cn.insurance.action.admin.role.RoleAction" singleton="false">
+		<property name="adminRoleServ" ref="adminRoleServ"></property>
+	</bean>
+	
+	
+	
+	<!-- 10W -->
+	<bean id="adminPriceAction" class="cn.insurance.action.admin.price.PriceAction" singleton="false" parent="supportAction">
+		<property name="priceServ" ref="priceServ"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+	</bean>
+	<!-- 20W -->
+	<!--<bean id="adminPriceActionT" class="cn.insurance.action.admin.price.PriceActionT" singleton="false" parent="supportAction">
+		<property name="priceServT" ref="priceServT"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+	</bean>
+	--><!-- 30W -->
+	<!--<bean id="adminPriceActionS" class="cn.insurance.action.admin.price.PriceActionS" singleton="false" parent="supportAction">
+		<property name="priceServS" ref="priceServS"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+	</bean>
+	
+	
+	
+	
+	
+	 
+	--><bean id="adminMonthFeeAction" class="cn.insurance.action.admin.account.MonthFeeAction" singleton="false" parent="supportAction">
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+		<property name="adminMonthFeeServ" ref="adminMonthFeeServ"></property>
+	</bean>
+	
+	<bean id="adminYuCunAction" class="cn.insurance.action.admin.account.YuCunAction" singleton="false" parent="supportAction">
+		<property name="adminYuCunServ" ref="adminYuCunServ"></property>	
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>	
+		
+	</bean>
+	
+	<bean id="adminPeiKuanAction" class="cn.insurance.action.admin.peikuan.PeiKuanAction" singleton="false" parent="supportAction">
+		<property name="adminBillServ" ref="adminBillServ"></property>
+		<property name="tbPeiKuanServ" ref="tbPeiKuanServ"></property>
+		
+	</bean>
+	
+
+	<bean id="adminTongJiAction" class="cn.insurance.action.admin.tongji.TongJiAction" singleton="false" parent="supportAction">
+		<property name="tongJiServ" ref="tongJiPubServ"></property>
+		<property name="adminPartmentServ" ref="adminPartmentServ"></property>
+	</bean>
+	
+	<!-- 旅行社树形结构管理 -->
+	<bean id="adminPartmentTreeAction" class="cn.insurance.action.admin.partment.tree.PartmentAdminTreeAction" singleton="false" parent="supportAction">
+		<property name="adminPartmentTreeServ" ref="adminPartmentTreeServ"></property>
+	</bean>
+	
+	
+	<!--  -->
+	
+	
+	
+	<!-- 权限管理 -->
+	
+	<bean id="roleAction" class="cn.insurance.action.admin.right.RoleAction" singleton="false" parent="supportAction">
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+	</bean>
+	
+	<bean id="resourceAction" class="cn.insurance.action.admin.right.ResourceAction" singleton="false" parent="supportAction">
+		<property name="tbResourceServ" ref="tbResourceServ"></property>
+		<property name="tbRightServ" ref="tbRightServ"></property>
+	</bean>
+	
+	<bean id="rightAction" class="cn.insurance.action.admin.right.RightAction" singleton="false" parent="supportAction">
+		<property name="tbRightServ" ref="tbRightServ"></property>
+	</bean>
+	
+	<bean id="roleRightAction" class="cn.insurance.action.admin.right.RoleRightAction" singleton="false" parent="supportAction">
+		<property name="tbRightServ" ref="tbRightServ"></property>
+		<property name="tbRoleRightServ" ref="tbRoleRightServ"></property>
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+	</bean>
+	<!-- 	
+	<bean id="MessageAction" class="cn.insurance.action.MessageAdminAction" singleton="false" parent="baseAction">
+		<property name="tbMessageServ" ref="tbMessageServ"></property>
+		<property name="billQueryServ" ref="billQueryServ"></property>
+		<property name="tbApplyServ" ref="tbApplyServ"></property>
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="partmentAdminAction" class="cn.insurance.action.PartmentAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="" ref=""/>
+	</bean>
+	
+	<bean id="accountAdminAction" class="cn.insurance.action.AccountAdminAction" singleton="false" parent="baseAction">
+		<property name="tbAccountServ" ref="tbAccountServ"></property>
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="billAdminAction" class="cn.insurance.action.BillAdminAction" singleton="false" parent="baseAction">
+		<property name="tbBillServ" ref="tbBillServ"></property>
+		<property name="" ref=""/>
+		<property name="tbMonthPayInfoServ" ref="tbMonthPayInfoServ"></property>
+	</bean>
+	
+	<bean id="billQueryAction" class="cn.insurance.action.BillQueryAction" singleton="false" parent="baseAction">
+		<property name="billQueryServ" ref="billQueryServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="" ref=""></property>
+		<property name="tbUserServ" ref="tbUserServ"></property>
+	</bean>
+	
+	
+	<bean id="travelerAdminAction" class="cn.insurance.action.TbTravelerInfoAction" singleton="false" parent="baseAction">
+		<property name="tbTravelerServ" ref="tbTravelerServ"></property>
+		<property name="tbBillServ" ref="tbBillServ"></property>
+	</bean>
+	
+	
+	<bean id="cancelBillAdminAction" class="cn.insurance.action.CancelBillAdminAction" singleton="false" parent="baseAction">
+		<property name="tbBillServ" ref="tbBillServ"></property>
+	</bean>
+	
+	<bean id="userLoginAction" class="cn.insurance.action.UserLoginAction" singleton="false" parent="baseAction">		
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+	
+	
+	<bean id="monthFeeAdminAction" class="cn.insurance.action.MonthFeeAdminAction" singleton="false" parent="baseAction">
+		<property name="tbMonthPayInfoServ" ref="tbMonthPayInfoServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="yuCunAdminAction" class="cn.insurance.action.YunCunAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPayOutInfoServ" ref="tbPayOutInfoServ"></property>	
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>	
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="peiKuanAdminAction" class="cn.insurance.action.PeiKuanAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPeiKuanServ" ref="tbPeiKuanServ"></property>
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="applyAdminAction" class="cn.insurance.action.TbApplyAdminAction" singleton="false" parent="baseAction">
+		<property name="tbApplyServ" ref="tbApplyServ"></property>
+		<property name="" ref=""></property>
+	</bean>
+	
+	<bean id="userAdminAction" class="cn.insurance.action.UserAdminAction" singleton="false" parent="baseAction">
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+
+	
+	<bean id="priceAdminAction" class="cn.insurance.action.priceAdminAction" singleton="false" parent="baseAction">
+		<property name="priceServ" ref="priceServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+		
+		<bean id="roleAdminAction" class="cn.insurance.action.RoleAdminAction" singleton="false" parent="baseAction">
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+	</bean>
+		
+	 -->
+</beans>

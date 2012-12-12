@@ -1,0 +1,20 @@
+#
+#Mon Oct 20 16:58:32 CST 2008
+genBasicCompId=false
+sessionFactoryName=cn.insurance.model.HibernateSessionFactory
+profile=
+daoSFId=
+version=3.1
+jndiPath=
+springDaoFile=
+useJavaTypes=true
+keyGenerator=
+libInstallFolder=libs
+addLibs2Project=false
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+reSettingsFile=
+configFile=/insurance_admin/source/hibernate.cfg.xml
+createConfigFile=true
+addLibs2Classpath=false

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+   "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+
+<xwork>
+	<include file="admin_project.xml"></include>
+	<include file="client_project.xml"></include>
+	<package name="default" extends="webwork-default">
+		
+		<interceptors>
+			<interceptor name="userInterceptor" class="cn.insurance.action.interceptor.UserInterceptor"></interceptor>
+			<interceptor-stack name="defaultIt">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="userInterceptor"></interceptor-ref> 
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="defaultIt"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="notLogin">/login.jsp</result>
+			<result name="notRight">/notRight.jsp</result>
+		</global-results>
+		
+		<!-- ******************************用户登录管理********************************************** -->
+		
+		<!-- 用户登录 -->
+		<action name="login" class="loginAction" method="login">
+			<result name="first_log">/pub/userinfo/first_update_user_info.jsp</result>
+			<result name="lxs_user" type="redirect">c_userMessage.action</result>
+			<result name="bx_user" type="redirect">bxDbMessage.action</result>
+			<result name="success">/success.jsp</result>
+			<result name="input">/login.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<!-- 用户注销 -->
+		<action name="logout" class="loginAction" method="logout">
+			<result name="success">/login.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<!-- 用户第一次登录时修改用户信息 -->
+		<action name="firstUpdateUserInfoByUser" class="pubUserAction" method="updateUserInfo">
+			<result name="success">/pub/userinfo/first_update_user_info_success.jsp</result>
+			<result name="input">/pub/userinfo/update_user_info.jsp</result>
+		</action>
+		
+		<!-- 用户修改自己的信息 -->
+		
+		<action name="toUpdateUserInfoByUser" class="pubUserAction" method="toUpdateUserInfo">
+			<result name="success">/pub/userinfo/update_user_info.jsp</result>
+		</action>
+		
+		<action name="updateUserInfoByUser" class="pubUserAction" method="updateUserInfo">
+			<result name="success">/pub/userinfo/update_user_info_success.jsp</result>
+			<result name="input">/pub/userinfo/update_user_info.jsp</result>
+		</action>
+		
+		
+	
+		
+		<!-- 下载旅客明细的文件 -->
+		<action name="downloadTravelerFile" class="downloadAdminAction" method="downloadFile">
+			<result name="input">/file_not_found.jsp</result>
+			<result name="success" type="stream">
+				<param name="contentType">application/x-msdownload</param>
+                <param name="inputName">travelerFileInputStream</param>
+                <param name="bufferSize">1024</param>              
+                <param name="contentDisposition">filename=${fileName}</param>
+			</result>
+			 <interceptor-ref name="params"/>
+		</action>
+		<!-- 下载保存在pub/file下的系统文件 -->
+		<action name="downloadSysFile" class="downloadAdminAction" method="downloadFileBypath">
+			<result name="input">/file_not_found.jsp</result>
+			<result name="success" type="stream">
+				<param name="contentType">application/x-msdownload</param>
+                <param name="inputName">travelerFileInputStream</param>
+                <param name="bufferSize">1024</param>              
+                <param name="contentDisposition">filename=${fileName}</param>
+			</result>
+			 <interceptor-ref name="params"/>
+		</action>
+		
+		<!-- 统计报表 -->		
+		
+			
+					
+
+	</package>
+</xwork>

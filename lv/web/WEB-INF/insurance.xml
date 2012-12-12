@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- 
+<Context path="/insurance">
+	<Resource name="jdbc/insurance" type="javax.sql.DataSource"	  
+		driverClassName="com.mysql.jdbc.Driver"
+		maxIdle="10" maxWait="5000" 
+		username="root"
+		password="root"
+		url="jdbc:mysql://localhost:3306/dbinsurance"
+		maxActive="100" />
+</Context>
+ -->
+<!-- 
+<Context path="/insurance" docBase="insurance.war" debug="1" reloadable="true" crossContext="false">                 
+	<Resource name="jdbc/insurance" auth="Container" type="javax.sql.DataSource"/>
+	    <ResourceParams name="jdbc/insurance">
+		<parameter>
+			<name>factory</name>
+			<value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
+		</parameter>
+		<parameter>
+			<name>driverClassName</name>
+			<value>com.mysql.jdbc.Driver</value>
+		</parameter>
+		<parameter>
+			<name>url</name>
+			<value>jdbc:mysql://localhost:3306/dbinsurance</value>
+		</parameter>
+		<parameter>
+			<name>username</name>
+			<value>root</value>
+		</parameter>
+		<parameter>
+			<name>password</name>
+			<value></value>
+		</parameter>
+		<parameter>
+			<name>maxActive</name>
+			<value>80</value>
+		</parameter>
+		<parameter>
+			<name>maxIdle</name>
+			<value>10</value>
+		</parameter>
+		<parameter>
+			<name>maxWait</name>
+			<value>10</value>
+		</parameter>
+     </ResourceParams> 
+</Context>	
+
+-->

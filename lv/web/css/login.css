@@ -1,0 +1,7 @@
+*{margin:0;padding:0;}
+body{font:12px/180% Verdana, Arial, Helvetica, sans-serif, "宋体";text-align:center;}
+body.login{background:#fff;}
+.loginform{background:#fff url(../images/login_bg.gif) no-repeat 0 0;margin:50px auto 0;width:663px;height:423px;color:#333;}
+.loginform label{color:#4072b7; font-weight:700;}
+.inputbox{border:1px solid #4072b7;height:17px;}
+.errm li{color:red;list-style-type:disc;}

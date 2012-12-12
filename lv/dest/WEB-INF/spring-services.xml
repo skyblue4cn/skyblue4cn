@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
+        <property name="dataSource" ref="dataSource"></property>   
+    </bean>  
+
+	<!-- 事务模板 -->
+	<bean id="baseTxProxy" abstract="true" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">   
+	    <property name="transactionManager" ref="transactionManager"></property>   
+	    <property name="transactionAttributes">   
+	        <props>   
+	            <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>   
+	            <prop key="*">PROPAGATION_REQUIRED,-Exception</prop>   
+	        </props>   
+	    </property>   
+	</bean> 
+	
+	
+	<!-- pub start -->
+	
+		
+	
+	<bean id="tbUserServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.pub.impl.TbUserServ" singleton="true">
+				<property name="tbUserDao" ref="tbUserDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="tongJiPubServ" class="cn.insurance.service.pub.impl.TongJjServ" singleton="true">
+		<property name="allCompanyYearStatDao" ref="allCompanyYearStatDao"></property>
+		<property name="tongJiByYearDao" ref="tongJiByYearDao"></property>
+		<property name="tongJIbyMonthDao" ref="tongJiByMonthDao"></property>
+		<property name="tongJiByDayDao" ref="tongJiByDayDao"></property>
+		<property name="tongJiByTimeSpaceDao" ref="tongJiByTimeSpaceDao"></property>
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<!--  pub end -->
+	
+	<!-- client start -->
+	
+		
+	<bean id="clientMessageServ" parent="baseTxProxy">
+	
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientMessageServ" singleton="true">
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="clientBillServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientBillServ" singleton="true">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="priceServ" ref="priceServ"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="tbTravelerInfoDao" ref="tbTravelerInfoDao"></property>
+				<!--<property name="clientBillServ" ref="clientBillServ"></property>
+			--></bean>
+		</property>
+	</bean>
+	
+	<bean id="clientAccountServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientAccountServ" singleton="true">
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="clientMonthFeeServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientMonthFeeServ" singleton="true">
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="clientYuCunServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientYuCunServ" singleton="true">
+				<property name="tbPayoutInfoDao" ref="tbPayOutInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="clientApplyServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientApplyServ" singleton="true">
+				<property name="tbApplyDao" ref="tbApplyDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="clientPartmentServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.client.impl.ClientPartmentServ" singleton="true">
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- client end -->
+	
+	<!-- ADMIN start -->
+	
+	<bean id="adminMessageServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminMessageServ" singleton="true">
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="tbApplyDao" ref="tbApplyDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+		<bean id="adminBillServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminBillServ" singleton="true">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="priceServ" ref="priceServ"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbPayOutInfoDao" ref="tbPayOutInfoDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="tbListForMonthPayDao" ref="tbListForMonthPayDao"></property>
+				<property name="tbBillSureInfoDao" ref="tbBillSureInfoDao"></property>
+				<property name="tbTravelerInfoDao" ref="tbTravelerInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+		
+	<bean id="adminPartmentServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminPartmentServ" singleton="true">
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbAdjustFeeDao" ref="tbAdjustFeeDao"></property>
+				<property name="tbAccidentalFeeDao" ref="tbAccidentalFeeDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="adminAccountServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminAccountServ" singleton="true">
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbPayOutInfoDao" ref="tbPayOutInfoDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="adminMonthFeeServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminMonthFeeServ" singleton="true">
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbListForMonthPayDao" ref="tbListForMonthPayDao"></property>
+				<property name="tbMonthPayOutLogDao" ref="tbMonthPayOutLogDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbPayoutInfoDao" ref="tbPayOutInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="adminYuCunServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminYuCunServ" singleton="true">
+				<property name="tbPayoutInfoDao" ref="tbPayOutInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+		
+	<bean id="adminApplyServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminApplyServ" singleton="true">
+				<property name="tbApplyDao" ref="tbApplyDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="adminRoleServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.admin.impl.AdminRoleServ" singleton="true">
+				<property name="tbRoleDao" ref="tbRoleDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- ADMIN end -->
+	
+	<!-- 权限管理 -->
+	<bean id="tbResourceServ" class="cn.insurance.service.right.impl.TbResourceServ" singleton="true">
+		<property name="tbResourceDao" ref="tbResourceDao"></property>
+	</bean>
+	
+	<bean id="tbRightServ" class="cn.insurance.service.right.impl.TbRightServ" singleton="true">
+		<property name="tbRightDao" ref="tbRightDao"></property>
+	</bean>
+	
+	<bean id="tbRoleServ" class="cn.insurance.service.right.impl.TbRoleServ" singleton="true">
+		<property name="tbRoleDao" ref="roleDao"></property>
+	</bean>
+	
+	<bean id="tbRoleRightServ" class="cn.insurance.service.right.impl.TbRoleRightServ" singleton="true">
+		<property name="tbRoleRightDao" ref="tbRoleRightDao"></property>
+	</bean>
+	
+	
+	<!-- 权限管理 -->
+	
+	
+	<!-- 旅行社树形结构管理 -->
+	<bean id="adminPartmentTreeServ" class="cn.insurance.service.admin.impl.AdminPartmentTreeServ" singleton="true">
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<!-- 
+	<bean id="tbRoleServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbRoleServ" singleton="true">
+				<property name="tbRoleDao" ref="tbRoleDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="tbPartmentServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbPartmentServ" singleton="true">
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbAdjustFeeDao" ref="tbAdjustFeeDao"></property>
+				<property name="tbAccidentalFeeDao" ref="tbAccidentalFeeDao"></property>
+			</bean>
+		</property>
+	</bean>
+
+	
+	<bean id="tbAccountServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbAccountServ" singleton="true">
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbPayOutInfoDao" ref="tbPayOutInfoDao"></property>
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbYearPayInfoDao" ref="tbYearPayInfoDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="tbBillServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbBillServ" singleton="true">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="priceServ" ref="priceServ"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbPayOutInfoDao" ref="tbPayOutInfoDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="tbListForMonthPayDao" ref="tbListForMonthPayDao"></property>
+				<property name="tbBillSureInfoDao" ref="tbBillSureInfoDao"></property>
+				<property name="tbTravelerInfoDao" ref="tbTravelerInfoDao"></property>
+				<property name="tbBillBackupDao" ref="tbBillBackupDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+		
+	<bean id="billQueryServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.BillQueryServ" singleton="true">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+			</bean>
+		</property>
+	</bean>
+	
+
+	
+	<bean id="tbPayOutInfoServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbPayOutInfoServ" singleton="true">
+				<property name="tbPayOutInfoDao" ref="tbPayOutInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="tbTravelerServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbTravelerInfoServ" singleton="true">
+				<property name="tbTravelerInfoDao" ref="tbTravelerInfoDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="tbMessageServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbMessageServ" singleton="true">
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="tbMonthPayInfoServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbMonthPayInfoServ" singleton="true">
+				<property name="tbMonthPayInfoDao" ref="tbMonthPayInfoDao"></property>
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbListForMonthPayDao" ref="tbListForMonthPayDao"></property>
+				<property name="tbMonthPayOutLogDao" ref="tbMonthPayOutLogDao"></property>
+				<property name="tbAccountDao" ref="tbAccountDao"></property>
+			</bean>
+		</property>
+	</bean>
+
+	
+	<bean id="tbApplyServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbApplyServ" singleton="true">
+				<property name="tbApplyDao" ref="tbApplyDao"></property>
+				<property name="tbBillDao" ref="tbBillDao"></property>
+			</bean>
+		</property>
+	</bean>
+	 -->
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	<!-- 10W -->
+	<bean id="priceServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.PirceServ" singleton="true">
+				<property name="tbAccidentalFeeDao" ref="tbAccidentalFeeDao"></property>
+				<property name="tbAdjustFeeDao" ref="tbAdjustFeeDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<!-- <property name="tbAccidentalFee_CarDao" ref="tbAccidentalFee_CarDao"></property> -->
+			</bean>
+		</property>
+	</bean>
+	
+		<!-- 20W -->
+	<!-- <bean id="priceServT" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.PirceServT" singleton="true">
+				<property name="tbAccidentalFeeDaoS" ref="tbAccidentalFeeDaoT"></property>
+				<property name="tbAdjustFeeDao" ref="tbAdjustFeeDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbAccidentalFee_CarDaoS" ref="tbAccidentalFee_CarDaoS"></property>
+			</bean>
+		</property>
+	</bean> -->
+		<!-- 30W -->
+	<!-- <bean id="priceServS" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.PirceServS" singleton="true">
+				<property name="tbAccidentalFeeDaoS" ref="tbAccidentalFeeDaoS"></property>
+				<property name="tbAdjustFeeDao" ref="tbAdjustFeeDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+				<property name="tbAccidentalFee_CarDaoS" ref="tbAccidentalFee_CarDaoS"></property>
+			</bean>
+		</property>
+	</bean>
+	  -->
+	
+	
+	
+	
+	
+	
+		
+	<bean id="tbPeiKuanServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TbPeiKuanServ" singleton="true">
+				<property name="tbPeiKuanDao" ref="tbPeiKuanDao"></property>			
+				<property name="tbBillDao" ref="tbBillDao"></property>
+			</bean>
+		</property>
+	</bean>
+		<!-- 定义定时操作的类 -->
+	<bean id="myWorkAtTime" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.ExecuteAffairAtTimeByQuartz">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="tbMessageDao" ref="tbMessageDao"></property>
+				<property name="beiFenCmd">
+					<value>mysqldump -uroot -hlocalhost -P3306 dbinsurance </value>				
+				</property>
+				<property name="filePath">
+					<value>e:/lvyou_beifen</value>
+				</property>
+				<property name="adminMonthFeeServ" ref="adminMonthFeeServ"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- 统计 -->
+	<bean id="tongJiServ" parent="baseTxProxy">
+		<property name="target">
+			<bean class="cn.insurance.service.impl.TongjiServ">
+				<property name="tbBillDao" ref="tbBillDao"></property>
+				<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

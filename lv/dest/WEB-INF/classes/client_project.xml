@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+   "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+
+<xwork>
+	<package name="client" extends="webwork-default">
+		<interceptors>
+			<interceptor name="userInterceptor" class="cn.insurance.action.interceptor.UserInterceptor"></interceptor>
+			<interceptor-stack name="defaultIt">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="userInterceptor"></interceptor-ref> 
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="defaultIt"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="notLogin">/login.jsp</result>
+			<result name="notRight">/notRight.jsp</result>
+		</global-results>
+		
+		<!-- 显示旅行社信息消息 -->
+		<action name="c_userMessage" class="clientMessageAction" method="queryTheUserPartmentMessage">
+			<result name="success">/client/message/show_message_for_partment.jsp</result>
+		</action>
+		
+										<!-- 申请保单 -->
+		<!-- 申请保单页面 -->
+		<action name="c_toApplyNewBill" class="supportAction" method="baseMethod">
+			<result name="success">/client/applybill/to_apply_new_bill.jsp</result>
+		</action>
+		
+		<!-- 申请提交保单时，就预提交一份保单 -->
+		<action name="c_toAddBill" class="clientBillAction" method="toAddBill">
+			<result name="success" type="redirect">c_applyBill.action?limitId=${tbBill.id}&amp;limitKey=${limitKey}&amp;limitType=add</result>
+			<result name="input">/client/applybill/new/show_reason_not_apply_bill.jsp</result>
+		</action>
+		
+		<!-- 申请新保单 -->
+		<action name="c_applyBill" class="clientBillAction" method="toApplyBill">
+			<result name="success">/client/applybill/new/apply_bill.jsp</result>
+			<result name="input">/client/applybill/new/show_reason_not_apply_bill.jsp</result>
+		</action>	
+		
+		<!-- 正式提交保单 -->
+		<action name="c_sureApplyBill" class="clientBillAction" method="sureApplybill">
+			<result name="success">/client/applybill/new/apply_bill_success.jsp</result>
+			<result name="input">/client/applybill/new/apply_bill.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		<action name="c_getBillPrice" class="clientBillAction" method="getBillPrice">
+			<result name="success">/client/ajax/show_bill_price.jsp</result>
+		</action>
+		
+		<!-- 删除保单 -->
+		<action name="c_deleteBillByUser" class="clientBillAction" method="deleteBillById">
+			<result name="success">/client/applybill/new/apply_bill_success.jsp</result>
+		</action>
+		
+		<!-- 更新保单信息 -->
+		<action name="c_toUpdateBillByUser" class="clientBillAction" method="toApplyBill">
+			<result name="success">/client/applybill/new/update_bill.jsp</result>
+			<result name="input">/client/applybill/new/show_reason_not_apply_bill.jsp</result>
+		</action>
+		<action name="c_updateBillByUser" class="clientBillAction" method="updateBillByUser">
+			<result name="success">/client/applybill/new/apply_bill_success.jsp</result>
+			<result name="input">/client/applybill/new/apply_bill_success.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		<!-- 更新备案保单信息-->
+		<action name="c_toUpdateBeiAnBillByUser" class="clientBillAction" method="toUpdateBeiAnBill">
+			<result name="success">/client/applybill/new/update_bei_an_bill_by_user.jsp</result>
+			<result name="input">/client/applybill/new/apply_bill_success.jsp</result>
+		</action>
+	
+		
+		<!-- 备案保单添加游客明细后重新提交 -->
+		<action name="c_updateBeiAnBillByUser" class="clientBillAction" method="updateBeiAnBillByUser">
+			<result name="success">/client/applybill/new/apply_bill_success.jsp</result>
+			<result name="input">/client/applybill/new/update_bei_an_bill_by_user.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+										<!-- 申请保单完 -->
+		
+										<!-- 按类统计保单（申请页面方便查看） -->
+		<!-- 查询该部门的待提交保单 -->
+		<!-- 查询该部门的待审核的保单 -->
+		<action name="c_showReferBillList" class="clientBillAction" method="getReferedBillList">
+			<result name="success">/client/applybill/query/show_refered_bill.jsp</result>
+		</action>
+		<action name="c_showBeiAnBillList" class="clientBillAction" method="getBeiAnBillList">
+			<result name="success">/client/applybill/query/show_beian_bill.jsp</result>
+		</action>
+	
+		<!-- 查询该部门通过已审查的保单 -->
+		<action name="c_showEffectedBillList" class="clientBillAction" method="getEffectedBillList">
+			<result name="success">/client/applybill/query/show_effected_bill.jsp</result>
+		</action>
+		<!-- 查询该部门被退回的保单 -->
+		<action name="c_showReturnBillList" class="clientBillAction" method="getReturnBillList">
+			<result name="success">/client/applybill/query/show_return_bill.jsp</result>
+		</action>
+											<!-- 按类统计保单完 -->
+		
+		<action name="c_getBillInfoToPrint" class="clientBillAction" method="getBillInfoToPrint">
+			<result name="success">/client/bill/show_bill_info.jsp</result>
+		</action>	
+			
+		
+										<!-- 保单游客管理 -->
+		<!-- 从文件导入游客信息 -->
+		<action name="c_loadTravelerByXsl" class="clientTravelerAction" method="uploadTravelerFile">
+			<result name="success">/client/applybill/new/upload_traveler_success.jsp</result>
+			<result name="input">/client/applybill/new/upload_traveler_xsl.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		
+					
+											<!-- 帐户结算 -->
+					<!-- 月费 -->
+		<!-- 用户结算 -->
+		<action name="c_toJieSuanByUser" class="clientAccountAction" method="toJieSuanByUser">
+			<result name="success">/client/account/show_account_info.jsp</result>
+		</action>
+		
+		<!-- 查询帐户的月结算信息及记录-->
+		<action name="c_getMonthPayLogForUser" class="clientMonthFeeAction" method="getMonthPayLog">
+			<result name="success">/client/account/month/show_partment_month_log.jsp</result>
+		</action>
+		
+		<!-- 用户查看已交费的月费结算保单清单 -->
+		<action name="c_getBillListByMonthIdForUser" class="clientMonthFeeAction" method="getMonthPayInfoById">
+			<result name="success">/client/account/month/show_month_bill_list.jsp</result>
+		</action>
+		
+	
+					<!-- 月费完 -->
+		
+		
+					<!-- 预存 -->
+		<!-- 查询帐户的预存信息记录（存款记录） -->
+		<action name="c_getYuCunCunLogForUser" class="clientYuCunAction" method="getYuCunCunLog">
+			<result name="success">/client/account/yucun/show_partment_yucun_cun.jsp</result>
+		</action>
+		
+		<!-- 查询帐户的预存信息记录（支付记录） -->
+		<action name="c_getYuCunPayLogForUser" class="clientYuCunAction" method="getYuCunPayLog">
+			<result name="success">/client/account/yucun/show_partment_yucun_pay.jsp</result>
+		</action>
+					<!-- 预存完 -->
+			
+				<!-- 部门综合查询保单 -->
+		<!-- 旅行社部门进入按条件查询页面，初始化一些数据 -->
+		<action name="c_toQueryBillByLxsPartment" class="clientBillSearchAction" method="toQueryAllBillByPartment">
+			<result name="success">/client/search/bill_query_by_partment.jsp</result>
+		</action>
+		
+		<!-- 旅行社部门根据条件查询保单 -->
+		<action name="c_queryBillByComditionForUser" class="clientBillSearchAction" method="queryBillByComditionForUser">
+			<result name="success">/client/search/show_all_bill.jsp</result>
+		</action>		
+			
+				<!-- 部门综合查询保单完 -->
+		
+		<!-- 保单批改申请管理 -->
+		
+		<action name="c_toManagerApplyUpdate" class="supportAction" method="baseMethod">
+			<result name="success">/client/applyupdate/manager_apply_update.jsp</result>
+		</action>
+	
+		<!-- 查询该部门所有未回复的申请 -->
+		<action name="c_getNotReplyApply" class="clientApplyAction" method="getNotReplyApply">
+			<result name="success">/client/applyupdate/show_not_reply_apply.jsp</result>
+		</action>
+		
+		<action name="c_getHasReplyApply" class="clientApplyAction" method="getHasReplyApply">
+			<result name="success">/client/applyupdate/show_has_reply_apply.jsp</result>
+		</action>
+		
+		<!-- 添加新的批改申请 -->
+		
+		<action name="c_toAddApplyUpdate" class="clientApplyAction" method="toAddApplyUpdate">
+			<result name="success">/client/applyupdate/add/add_apply.jsp</result>
+			<result name="input">/client/applyupdate/add/message.jsp</result>
+		</action>
+		
+		<action name="c_addUpdateApply" class="clientApplyAction" method="addTbApply">
+			<result name="success">/client/applyupdate/add/add_apply_success.jsp</result>
+			<result name="input">/client/applyupdate/add/add_apply.jsp</result>
+		</action>
+		<!-- 保单批改 -->	
+		
+		<!-- 更新批改申请 -->	
+		<action name="c_toUpdateApplyUpdate" class="clientApplyAction" method="toUpdateApplyUpdate">
+			<result name="success">/client/applyupdate/update/update_apply.jsp</result>
+			<result name="input">/client/applyupdate/update/error.jsp</result>
+		</action>
+		
+		<action name="c_updateApplyUpdate" class="clientApplyAction" method="updateApplyUpdate">
+			<result name="success">/client/applyupdate/update/success.jsp</result>
+		</action>		
+		
+		<!-- 查看申请的详情 -->
+		<action name="c_getApplyUpdateinfo" class="clientApplyAction" method="showApplyUpdateInfo">
+			<result name="success">/client/applyupdate/show_apply_info.jsp</result>
+		</action>
+				<!-- 旅行社总社管理保单 -->
+		
+				
+			<!-- 旅行社总社查询需要审核的保单 -->
+	
+		<!-- 旅行社总社查询已经审核的保单 -->
+	
+		
+		<!-- 旅行社总社查询被总社退回的保单 -->
+		
+		
+		<!-- 旅行社总社查看下级旅行社的保单和月费开始 -->
+		
+		<action name="c_toShowPartmentBill" class="clientPartmentBillAction" method="toShowPartmentBill">
+			<result name="success">/client/partment/showPartmentBill.jsp</result>
+		</action>
+		
+		<action name="c_toShowPartmentMonthFee" class="clientPartmentMonthFeeAction" method="showPartmentMonthFee">
+			<result name="success">/client/partment/showPartmentMonthFee.jsp</result>
+		</action>
+		
+		
+		<!-- 统计 -->	
+		
+		
+		<action name="c_toPartmentTongJi" class="clientTongAction" method="toTongJi">
+			<result name="success">/client/tongji2/tongji.jsp</result>
+		</action>
+		
+		<action name="c_tongJiByYear" class="clientTongAction" method="tongJiByYear">
+			<result name="success">/client/tongji2/year/tongjiByYear.jsp</result>
+		</action>
+		
+		<action name="c_tongJiByMonth" class="clientTongAction" method="tongJiByMonth">
+			<result name="success">/client/tongji2/month/tongjiByMonth.jsp</result>
+		</action>
+		
+		<action name="c_tongJiByDate" class="clientTongAction" method="tongJiByDate">
+			<result name="success">/client/tongji2/date/tongjiByDate.jsp</result>
+		</action>
+		
+		<action name="c_tongJiByTimeSpace" class="clientTongAction" method="tongJiByTimeSpace">
+			<result name="success">/client/tongji2/timespace/tongjiByTimespace.jsp</result>
+		</action>
+		
+		
+		
+		<!-- 旅行社总社查看下级旅行社的保单和月费结束 -->
+		
+		
+		
+		<!-- 查询保单信息，给旅行社总社审查 --><!-- 保单通过总社审查 -->	<!--保单未通过总社审查，被退回 -->
+		<!-- 
+			<action name="toManagerBillByZs" class="baseAction" method="baseMethod">
+			<result name="success">/client/zs_admin/manager_partment_bill_by_zs.jsp</result>
+		</action>	
+			<action name="getBillsNeedLxsSure" class="billQueryAction" method="getBillForCompanyToSure">
+			<result name="success">/client/zs_admin/fenlei/show_all_bill_need_sure.jsp</result>
+		</action>
+			<action name="getBillForCompanyHasSure" class="billQueryAction" method="getBillForCompanyHasSure">
+			<result name="success">/client/zs_admin/fenlei/show_all_bill_has_sure.jsp</result>
+		</action>
+		<action name="getBillForCompanyHasReturn" class="billQueryAction" method="getBillForCompanyReturn">
+			<result name="success">/client/zs_admin/fenlei/show_all_bill_has_return.jsp</result>
+		</action>
+		<action name="toSureBillByZs" class="billAdminAction" method="getTbBillById">
+			<result name="success">/client/zs_admin/sure/sure_bill_by_zs.jsp</result>
+		</action>
+		
+		
+		<action name="sureBillByZsSuccess" class="billAdminAction" method="sureBillByZsSuccess">
+			<result name="success">/client/zs_admin/sure/sure_bill_by_zs_success.jsp</result>
+		</action>
+		
+	
+		<action name="toReturnBillByZs" class="billAdminAction" method="getTbBillById">
+			<result name="success">/client/zs_admin/sure/return_bill_by_zs.jsp</result>
+		</action>
+		
+		<action name="returnBillByZs" class="billAdminAction" method="returnBillByZs">
+			<result name="success">/client/zs_admin/sure/return_bill_by_zs_success.jsp</result>
+		</action>	
+		 -->		
+				<!-- 旅行社总社管理保单 -->
+							
+											<!-- 帐户结算 -->
+					
+		
+		<!-- *************************************	前台完 ******************************************************** -->
+		
+	</package>
+</xwork>

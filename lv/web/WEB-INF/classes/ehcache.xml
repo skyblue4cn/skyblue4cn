@@ -1,0 +1,6 @@
+<ehcache>
+	<diskStore path="java.io.tmpdir" /> 
+	<defaultCache maxElementsInMemory="10000" eternal="false" overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="0" diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+	<!-- acegi cache-->
+	<cache name="userCache" maxElementsInMemory="10000" eternal="true" overflowToDisk="true" /><!-- acegi cache-->
+</ehcache>

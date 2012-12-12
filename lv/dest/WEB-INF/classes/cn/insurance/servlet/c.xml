@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xml_api_reply version="1">
+	<weather module_id="0" tab_id="0" mobile_row="0" mobile_zipped="1"
+		row="0" section="0">
+		<forecast_information>
+			<city data="Chengdu, Sichuan" />
+			<postal_code data="chengdu" />
+			<latitude_e6 data="" />
+			<longitude_e6 data="" />
+			<forecast_date data="2010-06-23" />
+			<current_date_time data="2010-06-23 21:00:00 +0000" />
+			<unit_system data="SI" />
+		</forecast_information>
+		<current_conditions>
+			<condition data="多云" />
+			<temp_f data="73" />
+			<temp_c data="23" />
+			<humidity data="湿度： 88%" />
+			<icon data="/ig/images/weather/mostly_cloudy.gif" />
+			<wind_condition data="风向： 北、风速：1 米/秒" />
+		</current_conditions>
+		<forecast_conditions>
+			<day_of_week data="周三" />
+			<low data="19" />
+			<high data="28" />
+			<icon data="/ig/images/weather/chance_of_rain.gif" />
+			<condition data="可能有雨" />
+		</forecast_conditions>
+		<forecast_conditions>
+			<day_of_week data="周四" />
+			<low data="21" />
+			<high data="27" />
+			<icon data="/ig/images/weather/chance_of_rain.gif" />
+			<condition data="可能有雨" />
+		</forecast_conditions>
+		<forecast_conditions>
+			<day_of_week data="周五" />
+			<low data="21" />
+			<high data="24" />
+			<icon data="/ig/images/weather/chance_of_rain.gif" />
+			<condition data="可能有雨" />
+		</forecast_conditions>
+		<forecast_conditions>
+			<day_of_week data="周六" />
+			<low data="21" />
+			<high data="24" />
+			<icon data="/ig/images/weather/chance_of_rain.gif" />
+			<condition data="可能有雨" />
+		</forecast_conditions>
+	</weather>
+</xml_api_reply>

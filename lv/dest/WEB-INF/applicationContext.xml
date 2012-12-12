@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-autowire="byName">
+	
+	<!-- 本地链接 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" singleton="true">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/dbinsurance"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123"></property>
+	</bean>
+	 <!-- 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" singleton="true"  destroy-method="close">
+		<property name="jndiName" value="java:comp/env/jdbc/insurance"/>
+	</bean>
+	 -->
+	<!-- 保险服务器链接 -->
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" singleton="true">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3310/dbinsurance"></property>
+		<property name="username" value="lvyou"></property>
+		<property name="password" value="lvyou028"></property>
+	</bean>
+	 -->
+	<bean id="connectionManager" class="cn.insurance.dao.conn.ConnectionManager" singleton="true">
+    	<property name="dataSource"><ref bean="dataSource"/></property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" singleton="true" >
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!-- 添加分页支持，设置每页显示数量个10,起始页从第1页开始 -->
+	<bean id="pageBean" class="cn.insurance.model.PageBean" singleton="false">
+		<property name="curPage" value="1"></property>
+	</bean>
+	
+	
+	<!-- 定时操作 -->
+
+	
+	<!-- 定义定时执行的任务 -->
+	<bean id="myQuartzDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myWorkAtTime"/>
+		<property name="targetMethod" value="deleteBeiAnOrUnUseBill"></property>
+	</bean>
+
+	<!-- 数据库备份 -->	
+	<bean id="sqlBenFen" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myWorkAtTime"></property>
+		<property name="targetMethod" value="beiFenSqlAndFile"></property>
+	</bean>
+	
+	<!-- 每月21号凌晨3点执行收取预存账户的月费 -->
+	<bean id="jiesuanAndShouFei" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myWorkAtTime"></property>
+		<property name="targetMethod" value="jiesuanAndShouFei"></property>
+	</bean>
+	
+	<!-- 上传的文件备份 -->
+	
+	
+	<!-- 定义触发器 -->
+	<bean id="myQuartzTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail" ref="myQuartzDetail"></property>
+		<property name="cronExpression">
+			<!-- 定义每天13点5分定时清除数据 -->
+			<value>0 05 15 * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- 每天晚上2.50分开始备份数据库 -->
+	<bean id="sqlBenFenTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="sqlBenFen"></property>
+		<property name="cronExpression">
+			<value>0 38 09 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="jiesuanAndShouFeiTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jiesuanAndShouFei"></property>
+		<property name="cronExpression">
+			<value>0 00 03 * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- 定义管理触发器的总开关 -->
+	<bean autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+      <property name="triggers"> 
+      <list> 
+        <ref local="myQuartzTrigger"/>
+         <ref local="jiesuanAndShouFeiTrigger"/>
+      </list> 
+     </property> 
+   </bean>
+	
+	
+	
+	
+	
+</beans>

@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+   "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+
+<xwork>
+	<package name="admin" extends="webwork-default">
+		<interceptors>
+			<interceptor name="userInterceptor" class="cn.insurance.action.interceptor.UserInterceptor"></interceptor>
+			<interceptor-stack name="defaultIt">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="userInterceptor"></interceptor-ref> 
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="defaultIt"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="notLogin">/login.jsp</result>
+			<result name="notRight">/notRight.jsp</result>
+		</global-results>
+		
+		<!-- 月结控制 放到servlet包 里面 修改于 2010-6-23 -->
+		<action name="yueJie" class="yueJieServlet" method="yuejie">
+			<!-- 准备用ajax控制 -->
+		</action>		
+					
+	
+		<!-- 消息 -->
+		<!-- 保险公司查看代办事务消息 -->
+		<action name="bxDbMessage" class="adminMessageAction" method="getDbMessageForBx">
+			<result name="success">/manager/message/show_all_db_message.jsp</result>
+		</action>
+		<!-- 保险公司查看待阅事务消息 -->
+		<action name="bxDyMessage" class="adminMessageAction" method="getDyMessageForBx">
+			<result name="success">/manager/message/show_all_dy_message.jsp</result>
+		</action>
+		
+				
+										<!-- 核单 -->
+		<!-- 保险公司进入审核保单页面 -->
+		<!-- 保险公司查询新申请的需要审核的保单 -->
+		<action name="getBillNeedBxSure" class="adminBillAction" method="getBillNeedBxSure">
+			<result name="success">/manager/sure/fenlei/show_bill_need_bx_sure.jsp</result>
+		</action>
+		
+		<!-- 保险公司查询已备案的保单 -->
+		<action name="getBillForBxBeiAn" class="adminBillAction" method="getBillForBxBeiAn">
+			<result name="success">/manager/sure/fenlei/show_beian_bill.jsp</result>
+		</action>
+		
+		
+		<!-- 保险公司查询已审核生效的保单 -->
+		<action name="getBillForBxHasSure" class="adminBillAction" method="getBillForBxHasSure">
+			<result name="success">/manager/sure/fenlei/show_bill_has_sure_for_bx.jsp</result>
+		</action>
+		
+		<!-- 保险公司查询退回的保单 -->
+		<action name="getBillForBxHasReturn" class="adminBillAction" method="getBillForBxHasReturn">
+			<result name="success">/manager/sure/fenlei/show_bill_return_by_bx.jsp</result>
+		</action>
+		
+		<!-- **************************************业务管理******************************************************** -->
+		<!-- 保险公司人员进入保单确认页面 -->		
+		<action name="toSureBillByBX" class="adminBillAction" method="toSureBillByBX">
+			<result name="success">/manager/sure/sure/sure_bill_by_bx.jsp</result>
+		</action>
+		
+		<!-- 保单通过保险公司审查，确认交费或记录 -->
+		<action name="sureBillByBxSuccess" class="adminBillAction" method="sureBillByBxSuccess">
+			<result name="success">/manager/sure/sure/sure_bill_message.jsp</result>
+		</action>
+		
+		
+		<!-- 保险公司退保单  弹出窗口填写退保原因 -->
+		<action name="toReturnBillByBx" class="adminBillAction" method="getTbBillById">
+			<result name="success">/manager/sure/sure/return_bill_by_bx.jsp</result>
+		</action>
+		
+		
+		<!-- 保单未通过保险公司审查，退回保单 -->
+		<action name="returnBillByBx" class="adminBillAction" method="returnBillByBx">
+			<result name="success">/manager/sure/sure/return_bill_success.jsp</result>
+		</action>
+		
+		<action name="toBeiAnBillbyBx" class="adminBillAction" method="getTbBillById">
+			<result name="success">/manager/sure/sure/beian_bill_by_bx.jsp</result>
+		</action>
+		
+		<!-- 保险公司将保单备案处理 -->
+		<action name="beiAnBillByBx" class="adminBillAction" method="beiAnBillByBx">
+			<result name="success">/manager/sure/sure/return_bill_success.jsp</result>
+		</action>
+		
+		<action name="getBillInfoToPrint" class="adminBillAction" method="getTbBillById">
+			<result name="success">/manager/bill/show_bill_info.jsp</result>
+		</action>
+				<!-- 核单完 -->
+		
+					<!-- 处理批改申请 -->
+		
+		<!-- 查询所有未回复的申请 -->	
+		<action name="getAllNotReplyOfApplyForBx" class="adminApplyAction" method="getAllNotReplyOfApplyForBx">	
+			<result name="success">/manager/apply/show/show_all_not_reply.jsp</result>
+		</action>
+		
+		<!-- 查询所有已回复的申请 -->
+		<action name="getAllHasReplyOfApplyForBx" class="adminApplyAction" method="getAllHasReplyOfApplyForBx">	
+			<result name="success">/manager/apply/show/show_all_has_reply.jsp</result>
+		</action>
+		
+		<action name="toDealWithTheApplyBybx" class="adminApplyAction" method="getApplyById">
+			<result name="success">/manager/apply/deal/deal_apply_update.jsp</result>
+		</action>
+		
+		<action name="replyApplyByBx" class="adminApplyAction" method="addReplyForApply">
+			<result name="success">/manager/apply/deal/add_reply_success.jsp</result>
+		</action>
+		
+		<action name="toDealBillByBx" class="adminBillAction" method="toUpdateBillByBx">
+			<result name="success">/manager/apply/deal/update_bill_by_bx.jsp</result>
+			<result name="input">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+		</action>
+		
+		<action name="toUpdateBillByBx" class="adminBillAction" method="toUpdateBillByBx">
+			<result name="success">/manager/apply/deal/update_bill_by_bx.jsp</result>
+			<result name="input">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+		</action>
+		
+		<action name="updateBillByBx" class="adminBillAction" method="updateBillByBx">
+			<result name="success">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+			<result name="input">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+		</action>
+		
+		<!-- 保险公司退保单  弹出窗口填写退保原因 -->
+		<action name="toReturnSureBillByBx" class="adminBillAction" method="getTbBillById">
+			<result name="success">/manager/apply/deal/return_sure_bill_by_bx.jsp</result>
+		</action>
+		
+		<action name="returnSureBillByBx" class="adminBillAction" method="returnSureBillByBx">
+			<result name="success">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+			<result name="input">/manager/apply/deal/update_bill_by_bx_success.jsp</result>
+		</action>
+		
+		<action name="getApplyUpdateInfo" class="adminApplyAction" method="getApplyById">
+			<result name="success">/manager/apply/show_apply_info.jsp</result>
+		</action>
+				<!-- 处理批改申请完 -->
+				
+		
+		
+		<!-- 进入结算，按旅行社查询部门的月费统计信息 -->
+		<action name="toMonthPayStatForBx" class="adminPartmentAction" method="queryAllCompany">
+			<result name="success">/manager/account/manager/month/jiesuan/manager_jiesuan.jsp</result>
+		</action>
+		
+		<!-- 按旅行社查询该旅行社的所有部门月费结算统计 -->
+		<action name="getPartmentMonthStatByCompanyId" class="adminMonthFeeAction" method="getPartmentMonthStatByCompanyId">
+			<result name="success">/manager/account/manager/month/jiesuan/show_all_partment_month_stat.jsp</result>
+		</action>
+		
+		<!-- 导出Excel -->
+		<!-- <action name="export" class="adminMonthFeeAction" method="export">
+			<result name="success" type="stream">/manager/account/manager/month/jiesuan/show_all_partment_month_stat.jsp</result>
+		</action> -->
+		
+		<!-- 按部门ID查询该部门的月费结算统计 -->
+		<action name="getPartmentMonthStatByPartmentId" class="adminMonthFeeAction" method="getPartmentMonthStatByPartmentId">
+			<result name="success">/manager/account/manager/month/jiesuan/show_partment_month_stat.jsp</result>
+		</action>
+		
+		<!-- 集中收取月费（选多个收费） -->
+		<action name="toShouMonthFeeMorePartment" class="adminMonthFeeAction" method="getPartmentFeeByIdList">
+			<result name="success">/account_admin/jiesuan/shou_more_partment_fee.jsp</result>
+		</action>
+		
+		<action name="shouMonthFeeByIdList" class="adminMonthFeeAction" method="shouPartmentFeeByIdList">
+			<result name="success">/account_admin/manager/month/pay_month_fee_success.jsp</result>
+		</action>
+		
+
+			<!-- 月费统计及结算完 -->
+			
+			<!-- 赔款记录 -->
+		
+		<action name="toManagerPeiKuan" class="adminPeiKuanAction" method="getAllPeiKuanLog">
+			<result name="success">/manager/peikuan/show_all_peikuan_log.jsp</result>
+		</action>
+		
+		<action name="addPeiKuanLog" class="adminPeiKuanAction" method="addPeiKuanLog">
+			<result name="success">/manager/peikuan/add_success.jsp</result>
+			<result name="input">/manager/peikuan/add_peikuan.jsp</result>
+		</action>
+		
+			<!-- 赔款记录完 -->
+			
+			
+		<!-- 旅行社管理 开始-->
+		
+		<action name="toAdminCompany" class="supportAction" method="baseMethod">
+			<result name="success">/manager/admin/companyAdminMain.jsp</result>
+		</action>
+		
+		<!--根据用户提交的信息来进行模糊查询 -->
+		<action name="queryValue" class="adminPartmentTreeAction" method="queryValue">
+			<result name="success">/manager/admin/partmentTreeList.jsp</result>
+		</action>
+		
+		<!-- 生成旅行社管理的树形结构 -->
+		<action name="getPartmentAdminTree" class="adminPartmentTreeAction" method="getPartmentAdminTree">
+			<result name="success">/manager/admin/partmentTreeList.jsp</result>
+		</action>
+		
+		<!-- 选择节点 -->
+		<action name="nodeSelect_root" class="adminPartmentTreeAction" method="nodeSelect">
+			<result name="success">/manager/admin/root.jsp</result>
+		</action>
+		
+		<action name="nodeSelect_company" class="adminPartmentTreeAction" method="nodeSelect">
+			<result name="success" type="redirect">partmentInfoAdmin.action?nodeid=${nodeid}</result>
+		</action>
+		
+		<action name="nodeSelect_partment" class="adminPartmentTreeAction" method="nodeSelect">
+			<result name="success" type="redirect">partmentInfoAdmin.action?nodeid=${nodeid}</result>
+		</action>
+		
+		
+		<!-- 添加旅行社 -->
+		<action name="toAddCompany" class="supportAction" method="baseMethod">
+			<result name="success">/manager/admin/company/add_company.jsp</result>
+		</action>
+		
+		<action name="addCompany" class="adminPartmentAction" method="addCompany">
+			<result name="success">/manager/admin/success_refreshtree.jsp</result>
+			<result name="input">/manager/admin/company/add_company.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		<!-- 旅行社或部门信息管理 -->
+		<action name="partmentInfoAdmin" class="adminPartmentAction" method="getPartmentInfo">
+			<result name="success">/manager/admin/partmentInfo/showPartmentInfo.jsp</result>
+		</action>
+		
+		<!-- 进入更新旅行社信息 -->
+		<action name="toUpdateCompanyInfo" class="adminPartmentAction" method="queryPartmentInfoById">
+			<result name="success">/manager/admin/company/update_company_info.jsp</result>
+		</action>
+		
+		<!-- 更新旅行社信息 -->
+		<action name="updateCompanyInfo" class="adminPartmentAction" method="updatePartment">
+			<result name="success">/manager/admin/success_refreshtree.jsp</result>
+			<result name="input">/manager/admin/company/update_company_info.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		<!-- 更新部门信息页面 -->
+		<action name="toUpdatePartmentInfo" class="adminPartmentAction" method="queryPartmentInfoById">
+			<result name="success">/manager/admin/partment/update_partment_info.jsp</result>
+		</action>
+		
+		<action name="updatePartmentInfo" class="adminPartmentAction" method="updatePartment">
+			<result name="success">/manager/admin/success_refreshtree.jsp</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+		
+		<!-- 旅行社或部门用户管理 -->
+		<action name="lxsUserAdmin" class="adminUserAction" method="getAllUserByPartmentId">
+			<result name="success">/manager/admin/user/lxs/show_all_partment_user.jsp</result>
+		</action>
+		<!-- 进入添加旅行社用户界面 -->
+		<action name="toAddLxsUser" class="adminUserAction" method="toAddLxsUser">
+			<result name="success">/manager/admin/user/lxs/add_lxs_user.jsp</result>
+		</action>
+		
+		<!-- 添加用户 -->
+		<action name="addLxsUser" class="adminUserAction" method="addLxsUser">
+			<result name="success" >/manager/admin/success.jsp</result>
+			<result name="input">/manager/admin/user/lxs/add_lxs_user.jsp</result>
+		</action>
+		
+		<!-- 保险公司人员修改用户信息界面 -->
+		<action name="toUpdateUserByBx" class="adminUserAction" method="toUpdateUserByBx">
+			<result name="success">/manager/admin/user/lxs/update_lxs_user_by_bx.jsp</result>
+		</action>
+		
+		<!-- 保险公司更新旅行社用户信息 -->
+		<action name="updatelxsUserByBx" class="adminUserAction" method="updatelxsUserByBx">
+			<result name="success" >/manager/admin/success.jsp</result>
+			<result name="input">/manager/admin/user/lxs/update_lxs_user_by_bx.jsp</result>
+		</action>
+		
+		
+		<!-- 旅行社或部门账户管理 -->
+		<action name="lxsAccountAdmin" class="adminAccountAction" method="getAccountByPartmentId">
+			<result name="success">/manager/admin/account/showAccountInfo.jsp</result>
+		</action>
+		
+			<!-- 查询帐户设置,更新 -->
+		<action name="toUpdateAccountProperty" class="adminAccountAction" method="getAccountById">
+			<result name="success">/manager/account/manager/update_account_property.jsp</result>
+		</action>
+	
+	
+		<!-- 更新帐户设置 -->
+		<action name="updateAccountProperty" class="adminAccountAction" method="updateAccountProperty">
+			<result name="success">/manager/admin/success.jsp</result>
+		</action>
+
+		<!-- 给帐户存款 -->
+		<action name="toCunKuanForAccount" class="adminAccountAction" method="getAccountById">
+			<result name="success">/manager/account/manager/yucun/cun_kuan.jsp</result>
+		</action>
+			
+		<!-- 存款 -->
+		<action name="shouFeeForYuCun" class="adminAccountAction" method="shouFeeForYuCun">
+			<result name="success">/manager/account/manager/success.jsp</result>
+		</action>
+		
+		
+		<!-- 查询存款记录 -->	
+		<action name="getYuCunCunLogForBx" class="adminYuCunAction" method="getYuCunCunLog">
+			<result name="success">/manager/admin/account_pay_out_log/showAccountCunLog.jsp</result>
+		</action>
+		
+		<!-- 查询支付记录 -->
+		<action name="getYuCunPayLogForBx" class="adminYuCunAction" method="getYuCunPayLog">
+			<result name="success">/manager/admin/account_pay_out_log/showAccountPayLog.jsp</result>
+		</action>
+		
+			<!-- 查询帐户的所有月费记录 -->
+		<action name="getMonthPayLogForBx" class="adminMonthFeeAction" method="getMonthPayLogByPartmentId">
+			<result name="success">/manager/admin/monthFee/showMonthFeeList.jsp</result>
+		</action>							
+		
+		<!-- 查看月费结算清单 -->
+		<action name="getBillListByMonthIdForBx" class="adminMonthFeeAction" method="getMonthPayInfoById">
+			<result name="success">/manager/account/manager/month/show_month_bill_list.jsp</result>
+		</action>
+		
+		<!-- 进入月费收费界面 -->
+		<action name="toPayMonthFee" class="adminMonthFeeAction" method="getMonthPayInfoById">
+			<result name="success">/manager/account/manager/month/pay_month_fee.jsp</result>
+		</action>
+		
+		<!-- 月结算收费 -->
+		<action name="shouMonthFee" class="adminMonthFeeAction" method="shouMonthFee">
+			<result name="success">/manager/account/manager/month/pay_month_fee_success.jsp</result>
+			<result name="input">/manager/account/manager/month/pay_month_fee.jsp</result>
+		</action>
+		
+			<!-- 查询某个旅行社下所有的部门进行管理 -->
+		<action name="companyPartmentAdmin" class="adminPartmentAction" method="getAllPartmentByNodeid">
+			<result name="success">/manager/admin/partment/showAllPartment.jsp</result>
+		</action>	
+		
+		<!-- 添加部门 -->
+		<action name="toAddPartment" class="adminPartmentAction" method="toAddPartment">
+			<result name="success">/manager/admin/partment/add_partment.jsp</result>
+		</action>
+			
+		<action name="addPartment" class="adminPartmentAction" method="addPartment">
+			<result name="success">/manager/admin/success_refreshtree.jsp</result>
+			<result name="input">/manager/admin/partment/add_partment.jsp</result>
+		</action>
+		
+		
+		<!-- 删除部门 -->
+		<action name="toDeletePartment" class="adminPartmentAction" method="queryPartmentInfoById">
+			<result name="success">/manager/admin/partment/delete_partment.jsp</result>
+		</action>
+		
+		<action name="deletePartmentById" class="adminPartmentAction" method="deletePartmentById">
+			<result name="success">/manager/admin/success_refreshtree.jsp</result>
+			<result name="input">/manager/admin/partment/err.jsp</result>
+		</action>
+		
+		
+		<!-- 旅行社管理完 -->
+			
+		
+		
+		<!-- 查询一个旅行社所有的部门用来作为选择的条件 -->
+		<action name="getAllPartmentToSelect" class="adminPartmentAction" method="getAllPartmentToSelect">
+			<result name="success">/pub/show_all_partment.jsp</result>
+		</action>
+	
+							<!-- 价格管理 -->
+		<!-- 进入价格管理 -->
+		<action name="toManagerPrice" class="adminPriceAction" method="toManagerPrice">
+			<result name="success">/manager/admin/price/manager_price.jsp</result>
+		</action>
+		
+		
+		
+		
+		<!-- 修改通用的意外险费率 -->
+		<!-- 10W -->
+		 <action name="toUpdateNormalAccidentFee" class="adminPriceAction" method="getNormalPrice">
+		 	<result name="success">/manager/admin/price/normal/update_normal_accidental_fee.jsp</result>
+		 </action>
+		 <!-- 20W -->
+		 <!--<action name="toUpdateNormalAccidentFeeT" class="adminPriceActionT">
+		 	<result name="success">/manager/admin/price/normal/update_normal_accidental_fee_20.jsp</result>
+		 </action>
+		 --><!-- 30W -->
+		 <!--<action name="toUpdateNormalAccidentFeeS" class="adminPriceActionS" method="getNormalPrice">
+		 	<result name="success">/manager/admin/price/normal/update_normal_accidental_fee_30.jsp</result>
+		 </action>
+		 
+		  
+		--><!-- 修改旅行社的意外险费率 -->
+		<!-- 10W -->
+		<action name="toUpdateCompanyAccidentalPrice" class="adminPriceAction" method="getPartmentPrice">
+			<result name="success">/manager/admin/price/lxs/update_company_accidental_price.jsp</result>
+		</action>
+		<!-- 20W -->
+		<!--<action name="toUpdateCompanyAccidentalPriceT" class="adminPriceActionT" method="getPartmentPrice">
+			<result name="success">/manager/admin/price/lxs/update_company_accidental_price_20.jsp</result>
+		</action>
+		--><!-- 30W -->
+		<!--<action name="toUpdateCompanyAccidentalPriceS" class="adminPriceActionS" method="getPartmentPrice">
+			<result name="success">/manager/admin/price/lxs/update_company_accidental_price_30.jsp</result>
+		</action>
+		
+		--><action name="updateCompanyAccidentalPrice" class="adminPriceAction" method="updateCompanyAccidentalPrice">
+			<result name="success">/manager/admin/price/success.jsp</result>
+		</action>	
+		
+		
+		 <action name="updateNormalAccidentalPrice" class="adminPriceAction" method="updateNormalAccidentalPrice">
+			<result name="success">/manager/admin/price/success.jsp</result>
+		</action>
+		
+		<!-- 修改通用的责任险费率 -->
+		 <action name="toUpdateNormalAdjustFee" class="adminPriceAction" method="getNormalPrice">
+		 	<result name="success">/manager/admin/price/normal/update_normal_adjust_fee.jsp</result>
+		 </action>
+		  
+		 <action name="updateNormalAdjustPrice" class="adminPriceAction" method="updateNormalAdjustPrice">
+			<result name="success">/manager/admin/price/success.jsp</result>
+		</action>
+		 
+		<!-- 修改旅行社的责任险费率 -->
+		<action name="toUpdateCompanyAdjustPrice" class="adminPriceAction" method="getPartmentPrice">
+			<result name="success">/manager/admin/price/lxs/update_company_adjust_price.jsp</result>
+		</action>
+		
+		<action name="updateCompanyAdjustPrice" class="adminPriceAction" method="updateCompanyAdjustPrice">
+			<result name="success">/manager/admin/price/success.jsp</result>
+		</action>
+	
+		 
+							<!-- 价格管理完 -->	 	
+		
+						<!-- 保单查询 -->
+		
+		<!-- 保险公司进入按条件查询页面，初始化一些数据 -->
+		<action name="toQueryBillByBx" class="adminBillSearchAction" method="toQueryAllBillByBx">
+			<result name="success">/manager/search/query_bill_by_bx.jsp</result>
+		</action>	
+		
+		<!-- 根据条件查询保单 -->	
+		<action name="queryBillByComditionForBx" class="adminBillSearchAction" method="queryBillByComditionForBx">
+			<result name="success">/manager/search/show_all_bill.jsp</result>
+		</action>	
+		
+			<!-- 保单查询完 -->
+	
+			
+		<!-- 添加记录 -->
+		<action name="toAddPeiKuanLog" class="supportAction" method="baseMethod">
+			<result name="success">/manager/peikuan/to_add_peikuan_log.jsp</result>
+		</action>
+		
+		<action name="toSearchBillByNumber" class="adminBillAction" method="getBillByNumber">
+			<result name="success">/manager/peikuan/add_peikuan_log.jsp</result>
+		</action>
+	
+	
+							<!-- 内部用户管理 -->
+		<!-- 进入内部用户管理 -->					
+		<action name="toManagerBxUser" class="adminUserAction" method="getBxAllUser">
+			<result name="success">/manager/admin/user/bx/show_all_bx_user.jsp</result>
+		</action>
+		
+		<!-- 添加内部用户 -->
+		<action name="toAddBxUser" class="adminUserAction" method="toAddBxUser">
+			<result name="success">/manager/admin/user/bx/add_bx_user.jsp</result>
+		</action>
+		
+		<action name="addBxUser" class="adminUserAction" method="addBxUser">
+			<result name="success">/manager/admin/user/success.jsp</result>
+		</action>
+		
+		<!-- 更新内部用户信息 -->
+		<action name="toUpdateBxUser" class="adminUserAction" method="toUpdateBxUser">
+			<result name="success">/manager/admin/user/bx/update_bx_user.jsp</result>
+		</action>
+		
+		<!-- 更新内部用户信息  -->
+		<action name="updateBxUser" class="adminUserAction" method="updateBxUserInfoByBx">
+			<result name="success">/manager/admin/user/success.jsp</result>
+			<result name="input">/manager/admin/user/bx/update_bx_user.jsp</result>
+		</action>	
+				
+							<!-- 内部用户管理完 -->
+							
+				
+		<!-- 角色及权限管理 -->
+		<!-- 
+		<action name="bxRoleList" class="adminRoleAction" method="getAllBxRoleList">
+			<result name="success">/manager/role/bxRoleList.jsp</result>
+		</action>
+		
+		<action name="toAddBxRole" class="supportAction" method="baseMethod">
+			<result name="success">/manager/role/addBxRole.jsp</result>
+		</action>
+		
+		<action name="addBxRole" class="adminRoleAction" method="addBxRole">
+			<result name="success">/manager/role/success.jsp</result>
+			<result name="input">/manager/role/addBxRole.jsp</result>
+		</action>
+		
+		<action name="toUpdateRole" class="adminRoleAction" method="getRoleById">
+			<result name="success">/manager/role/updateRole.jsp</result>
+		</action>
+		
+		<action name="updateRole" class="adminRoleAction" method="updateRole">
+			<result name="input">/manager/role/updateRole.jsp</result>
+			<result name="success">/manager/role/success.jsp</result>
+		</action>
+			
+		 -->
+		<!-- 对保单进行验证 -->
+		<action name="checkBillMd5Code" class="adminMd5Checkbill" method="checkBillMd5Code">
+			<result name="success">/manager/check/resultSuccess.jsp</result>
+			<result name="input">/manager/check/resultError.jsp</result>
+		</action>
+		
+			
+		<!-- 权限管理 -->
+		<!-- 权限 -->
+		<action name="toAdminRight" class="supportAction" method="baseMethod">
+			<result name="success">/manager/right/index.jsp</result>
+		</action>
+		
+		<action name="rightList" class="rightAction" method="rightList">
+			<result name="success">/manager/right/right/rightList.jsp</result>
+		</action>
+		
+		<action name="toAddRight" class="rightAction" method="toAddRight">
+			<result name="success">/manager/right/right/addRight.jsp</result>
+		</action>
+		
+		<action name="addRight" class="rightAction" method="addRight">
+			<result name="success">/manager/right/right/success.jsp</result>
+		</action>
+		<!-- 权限资源 -->
+		<action name="resourceList" class="resourceAction" method="resourceList">
+			<result name="success">/manager/right/resource/resourceList.jsp</result>
+		</action>
+		
+		<action name="toAddResource" class="resourceAction" method="toAddResource">
+			<result name="success">/manager/right/resource/addResource.jsp</result>
+		</action>
+		
+		<action name="addResource" class="resourceAction" method="addResource">
+			<result name="success">/manager/right/resource/success.jsp</result>
+		</action>
+		
+		<!-- 角色管理 -->
+		<action name="roleList" class="roleAction" method="roleList">
+			<result name="success">/manager/right/role/roleList.jsp</result>
+		</action>
+		
+		<action name="toAddBxRole" class="roleAction" method="toAddBxRole">
+			<result name="success">/manager/right/role/addRole.jsp</result>
+		</action>
+		
+		<action name="toAddLxsRole" class="roleAction" method="toAddLxsRole">
+			<result name="success">/manager/right/role/addRole.jsp</result>
+		</action>
+		
+		<action name="addRole" class="roleAction" method="addRole">
+			<result name="success">/manager/right/role/success.jsp</result>
+		</action>
+		
+		<action name="toUpdateRole" class="roleAction" method="toUpdateRole">
+			<result name="success">/manager/right/role/updateRole.jsp</result>
+		</action>
+		
+		<action name="updateRole" class="roleAction" method="updateRole">
+			<result name="success">/manager/right/role/success.jsp</result>
+		</action>
+		
+		<action name="toDeleteRole" class="roleAction" method="toDeleteRole">
+			<result name="success">/manager/right/role/deleteRole.jsp</result>
+		</action>
+		
+		<action name="deleteRole" class="roleAction" method="deleteRole">
+			<result name="success">/manager/right/role/success.jsp</result>
+			<result name="input">/manager/right/role/deleteRole.jsp</result>
+		</action>
+		
+		<!-- 给角色附权限 -->
+		<action name="toAssignRightToRole" class="roleRightAction" method="toAssignRightToRole">
+			<result name="success">/manager/right/role_right/assignRoleRight.jsp</result>
+		</action>
+		
+		<action name="assignRoleRight" class="roleRightAction" method="assignRightToRole">
+			<result name="success">/manager/right/role_right/success.jsp</result>
+		</action>
+		
+		
+		<!-- 统计 -->
+		
+		<action name="toAdminTongJi" class="adminTongJiAction" method="toAdminStat">
+			<result name="success">/manager/tongji/tongji.jsp</result>
+		</action>	
+		
+		<action name="adminTongJi" class="adminTongJiAction" method="adminStat">
+			<result name="allCompany">/manager/tongji/tongjiAllCompanyByYear.jsp</result>
+			<result name="company">/manager/tongji/tongjiCompanyByYear.jsp</result>
+			<result name="partment">/manager/tongji/tongjiPartmentByYear.jsp</result>
+		</action>
+			
+		<!-- 年度统计导出Excel结果
+		<action name="toJiexport" class="adminTongJiAction"  method="tongJiexport">
+			<result name="success">/manager/tongji/ok.jsp</result>
+		</action>
+		<action name="tongJiexport_Year" class="adminTongJiAction"  method="tongJiexport_Year">
+			<result name="success">/manager/tongji/ok.jsp</result>
+		</action>
+		<action name="tongJiexport_all" class="adminTongJiAction"  method="tongJiexport_all">
+			<result name="success">/manager/tongji/ok.jsp</result>
+		</action> -->
+		
+		<action name="adminTongJiByMonth" class="adminTongJiAction" method="adminTongJiByMonth">
+			<result name="success">/manager/tongji/tongjiPartmentByMonth.jsp</result>
+		</action>
+		
+		<action name="adminTongJiByDay" class="adminTongJiAction" method="adminTongJiByDay">
+			<result name="success">/manager/tongji/tongjiPartmentByDay.jsp</result>
+		</action>
+		
+	</package>
+</xwork>

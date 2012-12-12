@@ -1,0 +1,89 @@
+		
+	<bean id="MessageAction" class="cn.insurance.action.MessageAdminAction" singleton="false" parent="baseAction">
+		<property name="tbMessageServ" ref="tbMessageServ"></property>
+		<property name="billQueryServ" ref="billQueryServ"></property>
+		<property name="tbApplyServ" ref="tbApplyServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	
+	
+	
+    
+	<bean id="partmentAdminAction" class="cn.insurance.action.PartmentAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="pageBean" ref="pageBean"/>
+	</bean>
+	
+	<bean id="accountAdminAction" class="cn.insurance.action.AccountAdminAction" singleton="false" parent="baseAction">
+		<property name="tbAccountServ" ref="tbAccountServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	<bean id="billAdminAction" class="cn.insurance.action.BillAdminAction" singleton="false" parent="baseAction">
+		<property name="tbBillServ" ref="tbBillServ"></property>
+		<property name="pageBean" ref="pageBean"/>
+		<property name="tbMonthPayInfoServ" ref="tbMonthPayInfoServ"></property>
+	</bean>
+	
+	<bean id="billQueryAction" class="cn.insurance.action.BillQueryAction" singleton="false" parent="baseAction">
+		<property name="billQueryServ" ref="billQueryServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+		<property name="tbUserServ" ref="tbUserServ"></property>
+	</bean>
+	
+	
+	<bean id="travelerAdminAction" class="cn.insurance.action.TbTravelerInfoAction" singleton="false" parent="baseAction">
+		<property name="tbTravelerServ" ref="tbTravelerServ"></property>
+		<property name="tbBillServ" ref="tbBillServ"></property>
+	</bean>
+	
+	
+	<bean id="cancelBillAdminAction" class="cn.insurance.action.CancelBillAdminAction" singleton="false" parent="baseAction">
+		<property name="tbBillServ" ref="tbBillServ"></property>
+	</bean>
+	
+	<bean id="userLoginAction" class="cn.insurance.action.UserLoginAction" singleton="false" parent="baseAction">		
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+	
+	<bean id="userAdminAction" class="cn.insurance.action.UserAdminAction" singleton="false" parent="baseAction">
+		<property name="tbUserServ" ref="tbUserServ"></property>
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+	
+	
+	<bean id="priceAdminAction" class="cn.insurance.action.priceAdminAction" singleton="false" parent="baseAction">
+		<property name="priceServ" ref="priceServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+	</bean>
+	
+	<bean id="roleAdminAction" class="cn.insurance.action.RoleAdminAction" singleton="false" parent="baseAction">
+		<property name="tbRoleServ" ref="tbRoleServ"></property>
+	</bean>
+
+	
+	<bean id="monthFeeAdminAction" class="cn.insurance.action.MonthFeeAdminAction" singleton="false" parent="baseAction">
+		<property name="tbMonthPayInfoServ" ref="tbMonthPayInfoServ"></property>
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	<bean id="yuCunAdminAction" class="cn.insurance.action.YunCunAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPayOutInfoServ" ref="tbPayOutInfoServ"></property>	
+		<property name="tbPartmentServ" ref="tbPartmentServ"></property>	
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	<bean id="peiKuanAdminAction" class="cn.insurance.action.PeiKuanAdminAction" singleton="false" parent="baseAction">
+		<property name="tbPeiKuanServ" ref="tbPeiKuanServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>
+	
+	<bean id="applyAdminAction" class="cn.insurance.action.TbApplyAdminAction" singleton="false" parent="baseAction">
+		<property name="tbApplyServ" ref="tbApplyServ"></property>
+		<property name="pageBean" ref="pageBean"></property>
+	</bean>

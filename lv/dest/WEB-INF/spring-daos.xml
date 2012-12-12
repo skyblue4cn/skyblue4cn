@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="baseDao" class="cn.insurance.dao.BaseDao" singleton="false" abstract="true">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- TbUser Admin -->
+	<bean id="tbRoleDao" class="cn.insurance.dao.impl.TbRoleDao" parent="baseDao" singleton="true"></bean>
+	
+	<bean id="tbUserDao" class="cn.insurance.dao.impl.TbUserDao" parent="baseDao" singleton="true">
+		<property name="tbRoleDao" ref="tbRoleDao"></property>
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tbPartmentDao" class="cn.insurance.dao.impl.TbPartmentDao" parent="baseDao" singleton="true">
+		<property name="tbAccountDao" ref="tbAccountDao"></property>
+	</bean>
+	
+	<bean id="tbAccountDao" class="cn.insurance.dao.impl.TbAccountDao" parent="baseDao" singleton="true"></bean>
+	
+	
+	
+	<bean id="tbBillDao" class="cn.insurance.dao.impl.TbBillDao" parent="baseDao" singleton="true">
+		<property name="tbTravelerInfoDao" ref="tbTravelerInfoDao"></property>
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+		<property name="tbPeiKuanDao" ref="tbPeiKuanDao"></property>
+		
+	</bean>
+
+
+
+
+	
+	<!-- 意外险 -->
+	<bean id="tbAccidentalFeeDao" class="cn.insurance.dao.impl.TbAccidentalFeeDao" parent="baseDao" singleton="true"></bean>
+	<!--<bean id="tbAccidentalFeeDaoS" class="cn.insurance.dao.impl.TbAccidentalFeeDaoS" parent="baseDao" singleton="true"></bean>
+	<bean id="tbAccidentalFeeDaoT" class="cn.insurance.dao.impl.TbAccidentalFeeDaoT" parent="baseDao" singleton="true"></bean>
+	
+	 --><!-- 自驾车 -->
+	<!--<bean id="tbAccidentalFee_CarDao" class="cn.insurance.dao.impl.ITbAccidentalFee_CarDaoImpl" parent="baseDao" singleton="true"></bean>
+	<bean id="tbAccidentalFee_CarDaoS" class="cn.insurance.dao.impl.ITbAccidentalFee_CarDaoSImpl" parent="baseDao" singleton="true"></bean>
+	<bean id="tbAccidentalFee_CarDaoT" class="cn.insurance.dao.impl.ITbAccidentalFee_CarDaoTImpl" parent="baseDao" singleton="true"></bean>
+	 
+	
+	
+
+	
+	--><bean id="tbAdjustFeeDao" class="cn.insurance.dao.impl.TbAdjustFeeDao" singleton="true" parent="baseDao"></bean>
+	
+	<bean id="tbTravelerInfoDao" class="cn.insurance.dao.impl.TbTravelerInfoDao" singleton="true" parent="baseDao"></bean>
+	
+	<bean id="tbPayOutInfoDao" class="cn.insurance.dao.impl.TbPayOutInfoDao" singleton="true" parent="baseDao">
+		<property name="tbUserDao" ref="tbUserDao"></property>
+	</bean>
+	
+	<bean id="tbMonthPayInfoDao" class="cn.insurance.dao.impl.TbMonthPayInfoDao" singleton="true" parent="baseDao">
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+		<property name="tbMonthPayOutLogDao" ref="tbMonthPayOutLogDao"></property>
+		<property name="tbListForMonthPayDao" ref="tbListForMonthPayDao"></property>
+	</bean>
+	
+	<bean id="tbListForMonthPayDao" class="cn.insurance.dao.impl.TbListForMonthPayDao" singleton="true" parent="baseDao">
+		<property name="tbBillDao" ref="tbBillDao"></property>
+	</bean>
+	
+	<bean id="tbMonthPayOutLogDao" class="cn.insurance.dao.impl.TbMonthPayOutLogDao" singleton="true" parent="baseDao"></bean>
+	
+	<bean id="tbYearPayInfoDao" class="cn.insurance.dao.impl.TbYearPayInfoDao" singleton="true" parent="baseDao"></bean>
+
+	<bean id="tbMessageDao" class="cn.insurance.dao.impl.TbMessageDao" singleton="true" parent="baseDao"></bean>
+
+	<bean id="tbBillSureInfoDao" class="cn.insurance.dao.impl.TbBillSureInfoDao" singleton="true" parent="baseDao"></bean>
+
+	<bean id="tbPeiKuanDao" class="cn.insurance.dao.impl.TbPeiKuanDao" singleton="true" parent="baseDao">
+		<property name="tbBillDao" ref="tbBillDao"></property>
+	</bean>
+	
+	<bean id="tbApplyDao" class="cn.insurance.dao.impl.TbApplyDao" singleton="true" parent="baseDao">
+		<property name="tbBillDao" ref="tbBillDao"></property>
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tbBillBackupDao" class="cn.insurance.dao.impl.TbBillBackupDao" singleton="true" parent="baseDao"></bean>
+	
+	
+	
+	<bean id="allCompanyYearStatDao" class="cn.insurance.dao.tongji.impl.AllCompanyYearStatDao" singleton="true">
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tongJiByYearDao" class="cn.insurance.dao.tongji.impl.TongJiByYearDao" singleton="true" >
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tongJiByMonthDao" class="cn.insurance.dao.tongji.impl.TongJIbyMonthDao" singleton="true" >
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tongJiByDayDao" class="cn.insurance.dao.tongji.impl.TongJiByDayDao" singleton="true" >
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	<bean id="tongJiByTimeSpaceDao" class="cn.insurance.dao.tongji.impl.TongJiByTimeSpaceDao" singleton="true" >
+		<property name="tbPartmentDao" ref="tbPartmentDao"></property>
+	</bean>
+	
+	
+	
+	
+	
+	<!-- 权限管理 -->
+	<bean id="tbResourceDao" class="cn.insurance.dao.right.impl.TbResourceDao" singleton="true" parent="baseDao">
+		<property name="tbRightDao" ref="tbRightDao"></property>
+	</bean>
+	
+	<bean id="tbRightDao" class="cn.insurance.dao.right.impl.TbRightDao" singleton="true" parent="baseDao">
+	</bean>
+	
+	<bean id="roleDao" class="cn.insurance.dao.right.impl.TbRoleDao" singleton="true" parent="baseDao">
+	</bean>
+	
+	<bean id="tbRoleRightDao" class="cn.insurance.dao.right.impl.TbRoleRightDao" singleton="true" parent="baseDao">
+	</bean>
+	
+	<!-- 权限管理 -->
+</beans>

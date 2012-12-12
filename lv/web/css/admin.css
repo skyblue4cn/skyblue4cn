@@ -1,0 +1,67 @@
+*{margin:0; padding:0}
+body{background:#eeeeec; font:12px/18px Verdana, Arial, Helvetica, sans-serif; text-align:center; color:#2e3436;}
+td,th{font:12px/18px}
+input.text{background:url(images/icr_admin_33.gif) repeat-x; border:1px solid #888a85; padding:0 2px; height:17px; line-height:17px; font-size:12px; color:#2e3436;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;}
+input.button{background:url(images/icr_admin_30.gif) repeat-x; border:1px solid #5c6369; padding:0 3px; height:19px; line-height:19px; font-size:12px; color:#2b2f37;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;}
+
+#header{background:#255290 url(images/icr_admin_topbg.gif) repeat-x; height:72px;}
+#header .logo{float:left; display:block; background:url(images/icr_admin_logo.gif) no-repeat; margin:11px 0 0 20px; width:260px; height:51px;}
+.admincp{float:right; padding:10px 20px 0 0; color:#e1e6dc;}
+.admincp a{color:#fff; text-decoration:none;}
+.admincp a:hover{text-decoration:underline;}
+
+#nav{clear:both;overflow:hidden;background:#525a66 url(images/icr_admin_10.gif) repeat-x; border-top:1px solid #555753; border-bottom:1px solid #2b2f37; height:40px;}
+#nav ul{list-style:none;}
+#nav ul li{float:left;margin-right:1px;padding:3px;}
+#nav ul li.on{background:url(images/icr_admin_16.gif) no-repeat center bottom;}
+#nav ul li.r{float:right;}
+#nav ul li a{float:left; background:url(images/icr_admin_13d.gif) repeat-x 33px;padding:0 8px;border:1px solid #5f6673;height:33px; line-height:33px; color:#eeeeec; font-size:14px; letter-spacing:-1px; text-decoration:none;}
+#nav ul li a:hover{background:url(images/icr_admin_13.gif) repeat-x; border-color:#373a41;}
+#nav ul li a span{padding-left:20px; background-repeat:no-repeat;} 
+#nav ul li a span.ic0{background-image:url(images/ico/ico00.gif);}
+#nav ul li a span.ic1{background-image:url(images/ico/ico04.gif);}
+#nav ul li a span.ic2{background-image:url(images/ico/ico05.gif);}
+#nav ul li a span.ic3{background-image:url(images/ico/ico10.gif);}
+#nav ul li a span.ic4{background-image:url(images/ico/ico02.gif);}
+#nav ul li a span.ic5{background-image:url(images/ico/ico07.gif);}
+#nav ul li a span.ic6{background-image:url(images/ico/ico06.gif);}
+#nav ul li a span.ic7{background-image:url(images/ico/ico01.gif);}
+#nav ul li a span.ic8{background-image:url(images/ico/ico03.gif);}
+#nav ul li a span.ic9{background-image:url(images/ico/icrLogo.gif);}
+#nav ul li a span.ic10{background-image:url(images/ico/ico12.gif);}
+
+
+#conts{clear:both; width:100%;}
+.cuibox{float:left; overflow:hidden; background:#fff url(images/curbg.gif) repeat-x; border:0px solid #888a85; padding:0px; width:220px;text-align:left;}
+.conpbox{ text-align:left;width:100%;}
+
+.twomenu{background:url(images/icr_admin_22.gif) repeat-x; height:31px; width:100%;}
+.twomenu ul{list-style:none; padding:3px 0 0 3px;}
+.twomenu ul li{float:left;margin-right:1px; font-size:12px;}
+.twomenu ul li a{float:left; overflow:hidden; display:block; background:url(images/icr_admin_25.gif) no-repeat left -32px; padding:0 0 0 6px; height:28px; line-height:28px; cursor:pointer; color:#4b4e54; text-decoration:none;}
+.twomenu ul li a:hover{background-position:left 0;color:#2b2f37;}
+.twomenu ul li a span{float:left; display:block; background:url(images/icr_admin_25.gif) no-repeat left -32px; padding:0 6px 0 0;height:28px; line-height:28px!important;line-height:32px;}
+.twomenu ul li a:hover span{background-position:right 0;}
+.twomenu ul li a.on{background-position:left 0;color:#000;}
+.twomenu ul li a.on span{background-position:right 0;}
+
+.conpbox .conts{padding:20px;}
+.conts fieldset{border:1px solid #babdb6; margin:10px 0; padding:12px;}
+.conts fieldset legend{padding:0 5px;}
+
+.icrtable{background:#fff; border:1px solid #9d9ea2; border-collapse:collapse; margin:8px 0;}
+.icrtable th{background:#e2e4df url(images/icr_admin_38.gif) repeat-x; border:1px solid #9d9ea2; height:18px; line-height:18px;}
+.icrtable td{background:#fff; border:1px solid #9d9ea2;}
+
+.icrtable_1{background:#fff; border:1px solid #9d9ea2; border-collapse:collapse; margin:8px 0;}
+.icrtable_1 th{background:#e2e4df url(images/icr_admin_38.gif) repeat-x; border:1px solid #9d9ea2; height:18px; line-height:18px;}
+.icrtable_1 td{border:1px solid #9d9ea2;}
+
+.right{float:right;}
+.left{float:left;}
+
+body.popwindow{text-align:left;}
+body.popwindow #poptitle{background:#babdb6; padding:0 10px; height:28px; line-height:28px; color:#000; font-weight:700;}
+body.popwindow .conts{padding:10px;}
+.errorMessage{font-weight:bold;text-align:center;color:red;}
+.actionMessage{font-weight:bold;text-align:center;color:green;}
